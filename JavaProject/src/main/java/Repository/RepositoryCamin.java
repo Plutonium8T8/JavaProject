@@ -84,8 +84,8 @@ public class RepositoryCamin implements Repository<CaminEntity> {
     }
 
     @Override
-    public void save(CaminEntity toBeSaved) {
-        em.persist(toBeSaved);
+    public void save(CaminEntity camin) {
+        em.persist(camin);
     }
 
     public CameraEntity findByname(String name) {

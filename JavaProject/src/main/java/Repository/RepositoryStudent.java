@@ -86,11 +86,6 @@ public class RepositoryStudent implements Repository<StudentEntity>{
 
     @Override
     public void save(StudentEntity student) {
-        RepositoryCamera repositoryCamera = new RepositoryCamera();
-        CameraEntity camera = student.getReferencedContinent();
-        if (camera != null) {
-            repositoryCamera.save(camera);
-        }
-        em.persist(camera);
+        em.persist(student);
     }
 }

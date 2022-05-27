@@ -87,11 +87,6 @@ public class RepositoryCamera implements Repository<CameraEntity> {
 
     @Override
     public void save(CameraEntity camera) {
-        RepositoryCamin repositoryCamin = new RepositoryCamin();
-        CaminEntity camin = camera.getReferencedContinent();
-        if (camin != null) {
-            repositoryCamin.save(camin);
-        }
         em.persist(camera);
     }
 }
