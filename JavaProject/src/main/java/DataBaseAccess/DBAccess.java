@@ -8,15 +8,16 @@ import Entity.CaminEntity;
 import Entity.StudentEntity;
 
 public class DBAccess {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
-    private static EntityManager em = emf.createEntityManager();
+    private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+    private static EntityManager entityManager = entityManagerFactory.createEntityManager();
+
     public static EntityManager getInstance(){
-        return em;
+        return entityManager;
     }
 
     public static void closeConnection(){
-        em.close();
-        emf.close();
+        entityManager.close();
+        entityManagerFactory.close();
     }
 }
 

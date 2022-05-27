@@ -3,7 +3,7 @@ package Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Camera", schema = "public", catalog = "JavaProject")
+@Table(name = "camera", schema = "public", catalog = "JavaProject")
 public class CameraEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -11,23 +11,23 @@ public class CameraEntity {
     private int id;
 
     @Basic
-    @Column(name = "id_camin",insertable = false, updatable = false, nullable = true)
+    @Column(name = "id_camin",insertable = false, updatable = false, nullable = false)
     private int idCamin;
 
     @ManyToOne
     @JoinColumn(name = "id_camin", referencedColumnName = "id")
     private CaminEntity referencedCamin;
+
     @Basic
     @Column(name = "capacitate")
     private int capacitate;
 
-    public CaminEntity getReferencedContinent() {
+    public CaminEntity getReferencedCamin() {
         return referencedCamin;
     }
 
-
-    public void setReferencedContinent(CaminEntity referencedContinent) {
-        this.referencedCamin = referencedContinent;
+    public void setReferencedCamin(CaminEntity referencedCamin) {
+        this.referencedCamin = referencedCamin;
     }
 
     public int getId() {

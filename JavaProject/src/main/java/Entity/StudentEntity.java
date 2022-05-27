@@ -3,7 +3,7 @@ package Entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Student", schema = "public", catalog = "JavaProject")
+@Table(name = "student", schema = "public", catalog = "JavaProject")
 public class StudentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -11,7 +11,7 @@ public class StudentEntity {
     private int id;
 
     @Basic
-    @Column(name = "id_camera",insertable = false, updatable = false, nullable = true)
+    @Column(name = "id_camera",insertable = false, updatable = false, nullable = false)
     private Integer idCamera;
     @Basic
     @Column(name = "nume")
@@ -31,15 +31,15 @@ public class StudentEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_camera", referencedColumnName = "id")
-    private CameraEntity referencedRoom;
+    private CameraEntity referencedCamera;
 
-    public CameraEntity getReferencedContinent() {
-        return referencedRoom;
+    public CameraEntity getReferencedCamera() {
+        return referencedCamera;
     }
 
 
-    public void setReferencedContinent(CameraEntity referencedContinent) {
-        this.referencedRoom = referencedRoom;
+    public void setReferencedCamera(CameraEntity referencedCamera) {
+        this.referencedCamera = referencedCamera;
     }
 
     public int getId() {

@@ -18,30 +18,30 @@ public class RepositoryStudent implements Repository<StudentEntity>{
 
     @Override
     public int count() {
-        Query countQuery = em.createNativeQuery("SELECT count(*) FROM Student");
+        Query countQuery = em.createNativeQuery("SELECT count(*) FROM student");
         Object result = countQuery.getSingleResult();
         return ((BigInteger) result).intValue();
     }
 
     @Override
     public void deleteAll() {
-        Query deleteQuery = em.createNativeQuery("DELETE from Student");
+        Query deleteQuery = em.createNativeQuery("DELETE from student");
         deleteQuery.executeUpdate();
     }
 
     @Override
     public void deleteById(int id) {
-        Query deleteQuery = em.createNativeQuery("DELETE from Student where id = ?1");
+        Query deleteQuery = em.createNativeQuery("DELETE from student where id = ?1");
         deleteQuery.setParameter(1,id);
         deleteQuery.executeUpdate();
     }
 
     @Override
     public boolean existsById(int id) {
-        Query existsQuery = em.createNativeQuery("select count(*) FROM Student WHERE id = ?1");
+        Query existsQuery = em.createNativeQuery("select count(*) FROM student WHERE id = ?1");
         existsQuery.setParameter(1,id);
         Object result = existsQuery.getSingleResult();
-        if ( ((BigInteger) result).intValue() == 0){
+        if ( ((Integer) result).intValue() == 0){
             return false;
         }
         return true;
@@ -49,7 +49,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
     @Override
     public Iterable<StudentEntity> findAll() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
-        Query findQuery = em.createNativeQuery("SELECT * FROM Student");
+        Query findQuery = em.createNativeQuery("SELECT * FROM student");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
         Iterator itr = result.iterator();
@@ -68,15 +68,15 @@ public class RepositoryStudent implements Repository<StudentEntity>{
 
     @Override
     public StudentEntity findById(int queryId) {
-        Query existsQuery = em.createNativeQuery("select id FROM Student WHERE id = ?1");
+        Query existsQuery = em.createNativeQuery("select id FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         Object result = existsQuery.getSingleResult();
-        Integer id = ((BigInteger) result).intValue();
+        Integer id = ((Number) result).intValue();
 
-        existsQuery = em.createNativeQuery("select id_camin FROM Student WHERE id = ?1");
+        existsQuery = em.createNativeQuery("select id_camin FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-        Integer id_camin = ((BigInteger) result).intValue();
+        Integer id_camin = ((Number) result).intValue();
 
         StudentEntity returnStudentEntity = new StudentEntity();
         returnStudentEntity.setId(id);

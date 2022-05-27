@@ -49,7 +49,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
     @Override
     public Iterable<CameraEntity> findAll() {
         ArrayList<CameraEntity> resultList = new ArrayList<>();
-        Query findQuery = em.createNativeQuery("SELECT * FROM Camera");
+        Query findQuery = em.createNativeQuery("SELECT * FROM camera");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
         Iterator itr = result.iterator();
@@ -68,15 +68,15 @@ public class RepositoryCamera implements Repository<CameraEntity> {
 
     @Override
     public CameraEntity findById(int queryId) {
-        Query existsQuery = em.createNativeQuery("select id FROM Camera WHERE id = ?1");
+        Query existsQuery = em.createNativeQuery("select id FROM camera WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         Object result = existsQuery.getSingleResult();
-        Integer id = ((BigInteger) result).intValue();
+        Integer id = ((Number) result).intValue();
 
-        existsQuery = em.createNativeQuery("select id_camin FROM Camera WHERE id = ?1");
+        existsQuery = em.createNativeQuery("select id_camin FROM camera WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-        Integer id_camin = ((BigInteger) result).intValue();
+        Integer id_camin = ((Number) result).intValue();
 
         CameraEntity returnCameraEntity = new CameraEntity();
         returnCameraEntity.setId(id);
