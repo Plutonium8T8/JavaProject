@@ -10,8 +10,8 @@ public class CaminEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "nume_camin")
-    private String numeCamin;
+    @Column(name = "nume")
+    private String nume;
 
     public int getId() {
         return id;
@@ -21,12 +21,12 @@ public class CaminEntity {
         this.id = id;
     }
 
-    public String getNumeCamin() {
-        return numeCamin;
+    public String getNume() {
+        return nume;
     }
 
-    public void setNumeCamin(String numeCamin) {
-        this.numeCamin = numeCamin;
+    public void setNume(String nume) {
+        this.nume = nume;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class CaminEntity {
         CaminEntity that = (CaminEntity) o;
 
         if (id != that.id) return false;
-        if (numeCamin != null ? !numeCamin.equals(that.numeCamin) : that.numeCamin != null) return false;
+        if (nume != null ? !nume.equals(that.nume) : that.nume != null) return false;
 
         return true;
     }
@@ -45,7 +45,7 @@ public class CaminEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (numeCamin != null ? numeCamin.hashCode() : 0);
+        result = 31 * result + (nume != null ? nume.hashCode() : 0);
         return result;
     }
 }

@@ -58,7 +58,7 @@ public class RepositoryCamin implements Repository<CaminEntity> {
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
             String numeCamin = String.valueOf(obj[1]);
             camin.setId(id);
-            camin.setNumeCamin(numeCamin);
+            camin.setNume(numeCamin);
             resultList.add(camin);
         }
         return resultList;
@@ -78,7 +78,7 @@ public class RepositoryCamin implements Repository<CaminEntity> {
 
         CaminEntity returnCaminEntityEntity = new CaminEntity();
         returnCaminEntityEntity.setId(id);
-        returnCaminEntityEntity.setNumeCamin(numeCamin);
+        returnCaminEntityEntity.setNume(numeCamin);
 
         return returnCaminEntityEntity;
     }

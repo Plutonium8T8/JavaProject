@@ -9,6 +9,7 @@ public class CameraEntity {
     @Id
     @Column(name = "id")
     private int id;
+
     @Basic
     @Column(name = "id_camin",insertable = false, updatable = false, nullable = true)
     private int idCamin;
@@ -16,10 +17,14 @@ public class CameraEntity {
     @ManyToOne
     @JoinColumn(name = "id_camin", referencedColumnName = "id")
     private CaminEntity referencedCamin;
+    @Basic
+    @Column(name = "capacitate")
+    private int capacitate;
 
     public CaminEntity getReferencedContinent() {
         return referencedCamin;
     }
+
 
     public void setReferencedContinent(CaminEntity referencedContinent) {
         this.referencedCamin = referencedContinent;
@@ -41,6 +46,14 @@ public class CameraEntity {
         this.idCamin = idCamin;
     }
 
+    public int getCapacitate() {
+        return capacitate;
+    }
+
+    public void setCapacitate(int capacitate) {
+        this.capacitate = capacitate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,6 +63,7 @@ public class CameraEntity {
 
         if (id != that.id) return false;
         if (idCamin != that.idCamin) return false;
+        if (capacitate != that.capacitate) return false;
 
         return true;
     }
@@ -58,6 +72,7 @@ public class CameraEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + idCamin;
+        result = 31 * result + capacitate;
         return result;
     }
 }
