@@ -10,15 +10,6 @@ public class Main {
         EntityManager entityManager1 = DBAccess.getInstance();
         EntityTransaction transaction1 = entityManager1.getTransaction();
 
-        try{
-            transaction1.begin();
-
-            transaction1.commit();
-        }finally {
-            if(transaction1.isActive()){
-                transaction1.rollback();
-            }
             DBAccess.closeConnection();
-        }
     }
 }

@@ -10,7 +10,7 @@ public class CameraEntity {
     @Column(name = "id")
     private int id;
     @Basic
-    @Column(name = "id_camin")
+    @Column(name = "id_camin",insertable = false, updatable = false, nullable = true)
     private int idCamin;
 
     @ManyToOne

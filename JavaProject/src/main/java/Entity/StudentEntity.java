@@ -16,7 +16,7 @@ public class StudentEntity {
     @Column(name = "prenume")
     private String prenume;
     @Basic
-    @Column(name = "id_camera")
+    @Column(name = "id_camera",insertable = false, updatable = false, nullable = true)
     private Integer idCamera;
     @Basic
     @Column(name = "medie")
