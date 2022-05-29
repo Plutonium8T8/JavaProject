@@ -22,53 +22,37 @@ public class Main {
         EntityManager entityManager = DBAccess.getInstance();
         EntityTransaction transaction = entityManager.getTransaction();
 
-        /*CSVReader reader = null;
-        reader = new CSVReader(new FileReader("src/main/java/studenti.csv"));
-        String [] nextline;
-        int contor=0;
-        String nume=null,prenume=null,sex=null,nationalitate=null;
-        float medie=0;
-        while ((nextline = reader.readNext())!= null){
-            contor=0;
-            StudentEntity student = new;
-            for (String token : nextline){
-                contor = contor + 1;
-
-            }
-        }*/
+        ///citire din csv studenti
         try {
-            transaction.begin();
+            /*RepositoryStudent studentRepository = new RepositoryStudent();
+            CSVReader reader = null;
+            reader = new CSVReader(new FileReader("src/main/java/studenti.csv"));
+            String[] nextline;
+            int contor = 0;
+            while ((nextline = reader.readNext()) != null) {
+                transaction.begin();
+                contor = 0;
+                StudentEntity student = new StudentEntity();
+                for (String token : nextline) {
+                    contor++;
+                    if (contor == 1) {
+                        student.setNume(token);
+                    } else if (contor == 2) {
+                        student.setPrenume(token);
+                    } else if (contor == 3) {
+                        student.setMedie(Float.valueOf(token));
+                    } else if (contor == 4) {
+                        student.setSex(token);
+                    } else if (contor == 5) {
+                        student.setNationalitate(token);
+                    }
+                }
+                studentRepository.save(student);
+                transaction.commit();
 
-            RepositoryCamin caminRepository = new RepositoryCamin();
-            RepositoryCamera cameraRepository = new RepositoryCamera();
-            RepositoryStudent studentRepository = new RepositoryStudent();
-/*
-            caminRepository.deleteAll();
-            cameraRepository.deleteAll();
-*/
-            /*
-            CaminEntity newCamin = new CaminEntity();
-            newCamin.setNume("C43");
-            caminRepository.save(newCamin);
-
-/**/
-            CameraEntity newCamera = new CameraEntity();
-            newCamera.setReferencedCamin(caminRepository.findById(24));
-            newCamera.setIdCamin(newCamera.getReferencedCamin().getId());
-            newCamera.setCapacitate(100);
-            cameraRepository.save(newCamera);
-
-            /*
-            StudentEntity newStudent = new StudentEntity();
-            newStudent.setNume("TestNume");
-            newStudent.setPrenume("TestPrenume");
-            newStudent.setIdCamera(cameraRepository.findById(12).getId());
-            studentRepository.save(newStudent);
-
-             */
-
-            transaction.commit();
-        }finally {
+                
+            }*/
+        }finally{
             if (transaction.isActive()) {
                 transaction.rollback();
             }
