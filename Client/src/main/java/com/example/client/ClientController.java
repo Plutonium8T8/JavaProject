@@ -3,10 +3,9 @@ package com.example.client;
 import Client.Client;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class HelloController {
+public class ClientController {
     @FXML
     private Pane pane;
 
