@@ -90,88 +90,105 @@ class ClientThread extends Thread {
         Collections.reverse(sortedfemales);
         List <CameraEntity> camera = new ArrayList<>();
         camera = cameraRepository.findAll();
-
+        System.out.println(camera.size());
         int rand;   //rand=1 randul baietilor la distribuire, rand =2 randul fetelor la distribuire
         if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
             rand=1;
         else rand=2;
 
         for (CameraEntity str : camera ){
+            System.out.println(str);
             if (rand == 1){
                 int counter = 0;
                 for (StudentEntity str2 : sortedmales){
-                    if (str.getCapacitate() != 0){
+                    if (str.getCapacitate() > 0){
                         counter++;
                         transaction.begin();
+                        System.out.println(str2);
                         StudentEntity student;
                         student = studentRepository.findById(str2.getId());
                         student.setReferencedCamera(str);
                         student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(str.getId());
+                        studentRepository.deleteById(str2.getId());
                         transaction.commit();
                         transaction.begin();
                         studentRepository.save(student);
                         str.setCapacitate(str.getCapacitate()-1);
                         transaction.commit();
                     }else{
-                        counter++;
-                        transaction.begin();
-                        StudentEntity student;
-                        student = studentRepository.findById(str2.getId());
-                        student.setReferencedCamera(null);
-                        student.setIdCamera(null);
-                        studentRepository.deleteById(str.getId());
-                        transaction.commit();
-                        transaction.begin();
-                        studentRepository.save(student);
-                        str.setCapacitate(str.getCapacitate()-1);
-                        transaction.commit();
+                        break;
                     }
                 }
-                for (int i=1;i<=counter;i++)
-                    sortedmales.remove(i);
-                if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
-                    rand=1;
-                else rand=2;
-
+                for (int i=1;i<=counter;i++) {
+                    System.out.println("+++");
+                    System.out.println(sortedmales.remove(1));
+                }
+                if(!sortedmales.equals(Collections.emptyList()))
+                {
+                    if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
+                        rand=1;
+                    else rand=2;
+                }
             }
             else{
                 int counter =0;
                 for (StudentEntity str2 : sortedfemales){
-                    if (str.getCapacitate() != 0){
+                    if (str.getCapacitate() > 0){
                         counter++;
                         transaction.begin();
                         StudentEntity student;
                         student = studentRepository.findById(str2.getId());
                         student.setReferencedCamera(str);
                         student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(str.getId());
+                        studentRepository.deleteById(str2.getId());
                         transaction.commit();
                         transaction.begin();
                         studentRepository.save(student);
                         str.setCapacitate(str.getCapacitate()-1);
                         transaction.commit();
                     }else{
-                        counter++;
-                        transaction.begin();
-                        StudentEntity student;
-                        student = studentRepository.findById(str2.getId());
-                        student.setReferencedCamera(null);
-                        student.setIdCamera(null);
-                        studentRepository.deleteById(str.getId());
-                        transaction.commit();
-                        transaction.begin();
-                        studentRepository.save(student);
-                        str.setCapacitate(str.getCapacitate()-1);
-                        transaction.commit();
+                        break;
                     }
                 }
-                for (int i=1;i<=counter;i++)
-                    sortedfemales.remove(i);
+                System.out.println(sortedfemales.get(1));
+                System.out.println(sortedfemales.size());
+                System.out.println(str.getCapacitate());
+                for (int i=1;i<=counter;i++) {
+                    System.out.println("+++");
+                    System.out.println(sortedfemales.remove(1));
+                }
+                System.out.println(sortedfemales.get(1));
                 if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
                     rand=1;
                 else rand=2;
             }
+            System.out.println(rand);
+        }
+
+        for (StudentEntity str2 : sortedmales) {
+            transaction.begin();
+            StudentEntity student;
+            student = studentRepository.findById(str2.getId());
+            student.setReferencedCamera(null);
+            student.setIdCamera(null);
+            studentRepository.deleteById(str2.getId());
+            transaction.commit();
+            transaction.begin();
+            studentRepository.save(student);
+            transaction.commit();
+        }
+
+        for (StudentEntity str2 : sortedfemales) {
+            transaction.begin();
+            StudentEntity student;
+            student = studentRepository.findById(str2.getId());
+            student.setReferencedCamera(null);
+            student.setIdCamera(null);
+            studentRepository.deleteById(str2.getId());
+            transaction.commit();
+            transaction.begin();
+            studentRepository.save(student);
+            transaction.commit();
         }
     }
     public void run () {
@@ -186,8 +203,9 @@ class ClientThread extends Thread {
                 String request = in.readLine();
                 // Send the response to the oputput stream: server → client
                 PrintWriter out = new PrintWriter(socket.getOutputStream());
-                String raspuns = "Hello " + request + "!";
-                out.println(raspuns);
+                if(request == "removeAllStudents") studentRepository.deleteAll();
+                if(request == "addStudents") loadDB();
+                if(request == "distributeStudents") distribution();
                 out.flush();
             }
         } catch (IOException e) {
