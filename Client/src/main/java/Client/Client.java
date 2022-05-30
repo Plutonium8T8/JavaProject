@@ -8,10 +8,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class Client {
-
-    public String request;
-
-    public void run() {
+    public void sendMessage(String message) {
         String serverAddress = "127.0.0.1"; // The server's IP address
         int PORT = 8100; // The server's port
         try (Socket socket = new Socket(serverAddress, PORT);
@@ -20,22 +17,9 @@ public class Client {
              BufferedReader in = new BufferedReader(
                      new InputStreamReader(socket.getInputStream()))) {
             // Send a request to the server
-            boolean clientIsRunning = true;
-            System.out.println("Enter your command:");
-            while (clientIsRunning) {
-                if(request == "stop")
-                {
-                    clientIsRunning = false;
-                }
-                System.out.println(request);
-                out.println(request);
-            }
+            out.println(message);
         } catch (IOException e) {
             System.err.println("No server listening... " + e);
         }
-    }
-
-    public void stop() {
-        request = "stop";
     }
 }
