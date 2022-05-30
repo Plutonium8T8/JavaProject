@@ -24,7 +24,13 @@ public class Main {
 
         ///citire din csv studenti
         try {
-            /*RepositoryStudent studentRepository = new RepositoryStudent();
+
+            transaction.begin();
+            RepositoryStudent studentRepository = new RepositoryStudent();
+            RepositoryCamera cameraRepository = new RepositoryCamera();
+            RepositoryCamin caminRepository = new RepositoryCamin();
+
+            /*
             CSVReader reader = null;
             reader = new CSVReader(new FileReader("src/main/java/studenti.csv"));
             String[] nextline;
@@ -47,11 +53,13 @@ public class Main {
                         student.setNationalitate(token);
                     }
                 }
-                studentRepository.save(student);
+                studentRepository.save(student);*//*
+                StudentEntity student;
+                student = studentRepository.findById(1);
+                student.setReferencedCamera(cameraRepository.findById(1));
+                student.setIdCamera(student.getReferencedCamera().getId());
+                studentRepository.save(student);*/
                 transaction.commit();
-
-                
-            }*/
         }finally{
             if (transaction.isActive()) {
                 transaction.rollback();

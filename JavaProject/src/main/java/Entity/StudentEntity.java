@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class StudentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false)
     private int id;
 
     @Basic
@@ -120,12 +120,34 @@ public class StudentEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + idCamera;
+        if (idCamera == null)
+        {
+            result = 31 * result + 0;
+        }
+        else
+        {
+            result = 31 * result + idCamera;
+        }
         result = 31 * result + (nume != null ? nume.hashCode() : 0);
         result = 31 * result + (prenume != null ? prenume.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (nationalitate != null ? nationalitate.hashCode() : 0);
         result = 31 * result + (medie != null ? medie.hashCode() : 0);
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "StudentEntity{" +
+                "id=" + id +
+                ", idCamera=" + idCamera +
+                ", nume='" + nume + '\'' +
+                ", prenume='" + prenume + '\'' +
+                ", sex='" + sex + '\'' +
+                ", nationalitate='" + nationalitate + '\'' +
+                ", medie=" + medie +
+                ", referencedCamera=" + referencedCamera +
+                '}';
     }
 }
