@@ -219,19 +219,22 @@ class ClientThread extends Thread {
                     if(request.equals("removeAllStudents")) deleteDBStuds();
                     if(request.equals("addStudents")) loadDB();
                     if(request.equals("distributeStudents")) distribution();
-                    if(request.equals("addStudent")){
-                        request = in.readLine();
-                        String[] student = request.split(",");
-                        StudentEntity newStudent = new StudentEntity();
-                        transaction.begin();
-                        newStudent.setNume(student[0]);
-                        newStudent.setPrenume(student[1]);
-                        newStudent.setSex(student[2]);
-                        newStudent.setNationalitate(student[3]);
-                        newStudent.setMedie(Float.valueOf(student[4]));
-                        studentRepository.save(newStudent);
-                        transaction.commit();
+                    if (request != null){
+                        String[] message = request.split(",");
+                        if(message[0].equals("addStudent")){
+                            String[] student = request.split(",");
+                            StudentEntity newStudent = new StudentEntity();
+                            transaction.begin();
+                            newStudent.setNume(student[1]);
+                            newStudent.setPrenume(student[2]);
+                            newStudent.setSex(student[3]);
+                            newStudent.setNationalitate(student[4]);
+                            newStudent.setMedie(Float.valueOf(student[5]));
+                            studentRepository.save(newStudent);
+                            transaction.commit();
+                        }
                     }
+
                 }
                 out.flush();
             }

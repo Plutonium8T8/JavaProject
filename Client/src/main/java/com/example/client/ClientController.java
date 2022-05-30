@@ -77,9 +77,8 @@ public class ClientController implements Initializable {
 
     public void addStudent()
     {
-        String message = nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
+        String message = "addStudent," +  nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
         System.out.println(message);
-        client.sendMessage("addStudent");
         client.sendMessage(message);
     }
 
