@@ -59,6 +59,9 @@ public class Main {
                 student.setReferencedCamera(cameraRepository.findById(1));
                 student.setIdCamera(student.getReferencedCamera().getId());
                 studentRepository.save(student);*/
+            CameraEntity camera = new CameraEntity();
+            camera.setCapacitate(50);
+            camera.setReferencedCamin(camin.);
                 transaction.commit();
         }finally{
             if (transaction.isActive()) {
