@@ -53,12 +53,12 @@ public class Main {
                         student.setNationalitate(token);
                     }
                 }
-                studentRepository.save(student);*/
+                studentRepository.save(student);*//*
                 StudentEntity student;
                 student = studentRepository.findById(1);
                 student.setReferencedCamera(cameraRepository.findById(1));
                 student.setIdCamera(student.getReferencedCamera().getId());
-                studentRepository.save(student);
+                studentRepository.save(student);*/
                 transaction.commit();
         }finally{
             if (transaction.isActive()) {
