@@ -72,6 +72,9 @@ class ClientThread extends Thread {
         List <StudentEntity> males = new ArrayList<>();
         List <StudentEntity> females = new ArrayList<>();
 
+        EntityManager entityManager = DBAccess.getInstance();
+        EntityTransaction transaction = entityManager.getTransaction();
+
         males = studentRepository.findAllM();
         females = studentRepository.findAllF();
 
@@ -83,20 +86,48 @@ class ClientThread extends Thread {
                 .sorted(Comparator.comparing(StudentEntity::getMedie))
                 .collect(Collectors.toList());
 
+        Collections.reverse(sortedmales);
+        Collections.reverse(sortedfemales);
         List <CameraEntity> camera = new ArrayList<>();
         camera = cameraRepository.findAll();
 
         int rand = 1;   //rand=1 randul baietilor la distribuire, rand =2 randul fetelor la distribuire
         for (CameraEntity str : camera ){
             if (rand == 1){
+                for (StudentEntity str2 : sortedmales){
+                    if (str.getCapacitate() != 0){
+                        transaction.begin();
+                        str2.setReferencedCamera(str);
+                        str2.setId(str2.getReferencedCamera().getId());
+                        studentRepository.save(str2);
+                        str.setCapacitate(str.getCapacitate()-1);
+                        cameraRepository.save(str);
+                        transaction.commit();
+                        sortedmales.remove(str2);
+                    }else{
+                        break;
+                    }
+                }
                 rand++;
             }
             else{
-
+                for (StudentEntity str2 : sortedfemales){
+                    if (str.getCapacitate() != 0){
+                        transaction.begin();
+                        str2.setReferencedCamera(str);
+                        str2.setId(str2.getReferencedCamera().getId());
+                        studentRepository.save(str2);
+                        str.setCapacitate(str.getCapacitate()-1);
+                        cameraRepository.save(str);
+                        transaction.commit();
+                        sortedfemales.remove(str2);
+                    }else{
+                        break;
+                    }
+                }
                 rand--;
             }
         }
-
     }
     public void run () {
         try {
