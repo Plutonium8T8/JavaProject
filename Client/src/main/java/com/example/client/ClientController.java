@@ -36,21 +36,21 @@ public class ClientController {
     }
 
     public void switchScene1(ActionEvent event) throws IOException {
-        client.stop();
         root = FXMLLoader.load(getClass().getResource("client-scene1.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        client.stop();
     }
 
     public void switchScene2(ActionEvent event) throws IOException {
-        startClient();
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        startClient();
     }
     public void switchScene3(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
