@@ -4,29 +4,59 @@ import Client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ClientController {
+public class ClientController implements Initializable {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     Client client = new Client();
-    @FXML
-    private Pane pane;
+
+    String returnSex;
+    String returnNume;
+    String retrunPrenume;
+    String returnNationalitate;
+    String returnMedie;
 
     @FXML
-    private Button start;
+    private ChoiceBox<String> sex = new ChoiceBox<String>();
 
-    public void sendMessage(String message) {
+    @FXML
+    private TextField nume;
+
+    @FXML
+    private TextField prenume;
+
+    @FXML
+    private TextField nationalitate;
+
+    @FXML
+    private TextField medie;
+
+
+    private String[] sexChoice = {"male", "female"};
+
+    @Override
+    public void initialize (URL arg0, ResourceBundle arg1)
+    {
+        sex.getItems().addAll(sexChoice);
+    }
+
+    public void sendMessage(String message)
+    {
         client.sendMessage(message);
     }
 
@@ -45,9 +75,11 @@ public class ClientController {
         sendMessage("distributeStudents");
     }
 
-    public void addStudent(String nume, String prenume, String sex, String medie, String nationalitate)
+    public void addStudent()
     {
-        String message = nume + "," + prenume + "," + sex + "," + nationalitate + "," + medie;
+        String message = nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
+        System.out.println(message);
+        client.sendMessage("addStudent");
         client.sendMessage(message);
     }
 

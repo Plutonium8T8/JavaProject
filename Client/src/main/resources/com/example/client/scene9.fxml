@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane fx:id="scene9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.client.ClientController">
+   <children>
+      <Button fx:id="add" layoutX="529.0" layoutY="497.0" mnemonicParsing="false" onAction="#addStudent" prefHeight="35.0" prefWidth="223.0" text="Add" />
+      <TextField fx:id="nume" layoutX="529.0" layoutY="153.0" prefHeight="35.0" prefWidth="223.0">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="prenume" layoutX="528.0" layoutY="223.0" prefHeight="35.0" prefWidth="223.0" />
+      <TextField fx:id="nationalitate" layoutX="529.0" layoutY="293.0" prefHeight="35.0" prefWidth="223.0" />
+      <TextField fx:id="medie" layoutX="529.0" layoutY="361.0" prefHeight="35.0" prefWidth="223.0" />
+      <Text fx:id="numetxt" layoutX="561.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Nume" textAlignment="CENTER" wrappingWidth="159.0" />
+      <Text fx:id="prenumetxt" layoutX="561.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Prenume" textAlignment="CENTER" wrappingWidth="159.0" />
+      <Text layoutX="561.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Nationalitate" textAlignment="CENTER" wrappingWidth="159.0" />
+      <Text fx:id="medietxt" layoutX="561.0" layoutY="352.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Medie" textAlignment="CENTER" wrappingWidth="159.0" />
+      <Text fx:id="sextxt" layoutX="561.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Sex" textAlignment="CENTER" wrappingWidth="159.0" />
+      <Button fx:id="add1" layoutX="528.0" layoutY="566.0" mnemonicParsing="false" onAction="#switchScene2" prefHeight="35.0" prefWidth="223.0" text="Back" />
+      <ChoiceBox fx:id="sex" layoutX="528.0" layoutY="435.0" prefHeight="35.0" prefWidth="223.0" />
+   </children>
+</Pane>
