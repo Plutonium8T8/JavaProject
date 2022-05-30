@@ -44,12 +44,13 @@ public class ClientController {
         client.stop();
     }
 
-    public void switchScene2(ActionEvent event) throws IOException {
+    public void switchScene2(ActionEvent event) throws IOException, InterruptedException {
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        wait(1000);
         startClient();
     }
     public void switchScene3(ActionEvent event) throws IOException, InterruptedException {
