@@ -4,7 +4,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.client.ClientController">
    <children>
       <Button fx:id="function2" layoutX="504.0" layoutY="238.0" mnemonicParsing="false" onAction="#switchScene1" prefHeight="39.0" prefWidth="272.0" text="Add all students" />
@@ -17,6 +16,6 @@
       <Text layoutX="629.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text layoutX="473.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Select operation: " textAlignment="CENTER" wrappingWidth="333.13671875" />
       <Button fx:id="function1" layoutX="504.0" layoutY="174.0" mnemonicParsing="false" onAction="#switchScene1" prefHeight="39.0" prefWidth="272.0" text="Add student / camera / camin" />
-      <Button fx:id="function8" layoutX="556.0" layoutY="641.0" mnemonicParsing="false" onAction="#switchScene2" prefHeight="16.0" prefWidth="169.0" text="Disconnect" />
+      <Button fx:id="function8" layoutX="556.0" layoutY="641.0" mnemonicParsing="false" onAction="#switchScene1" prefHeight="16.0" prefWidth="169.0" text="Disconnect" />
    </children>
 </Pane>
