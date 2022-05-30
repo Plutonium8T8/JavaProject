@@ -32,7 +32,7 @@ public class ClientController {
 
     public void addStudent(String nume, String prenume, String sex, String medie, String nationalitate)
     {
-        client.response = nume + "," + prenume + "," + sex + "," + nationalitate + "," + medie;
+        client.request = nume + "," + prenume + "," + sex + "," + nationalitate + "," + medie;
     }
 
     public void switchScene1(ActionEvent event) throws IOException {

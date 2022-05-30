@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    public String response;
+    public String request;
 
     public void run() {
         String serverAddress = "127.0.0.1"; // The server's IP address
@@ -23,14 +23,12 @@ public class Client {
             boolean clientIsRunning = true;
             System.out.println("Enter your command:");
             while (clientIsRunning) {
-                Scanner scan = new Scanner(System.in);
-                //String request = scan.nextLine();
-                if(response == "stop")
+                if(request == "stop")
                 {
                     clientIsRunning = false;
                 }
-                //out.println(request);
-                response = in.readLine();
+                System.out.println(request);
+                out.println(request);
             }
         } catch (IOException e) {
             System.err.println("No server listening... " + e);
@@ -38,6 +36,6 @@ public class Client {
     }
 
     public void stop() {
-        response = "stop";
+        request = "stop";
     }
 }
