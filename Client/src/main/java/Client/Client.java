@@ -27,6 +27,8 @@ public class Client {
                 {
                     clientIsRunning = false;
                 }
+                Scanner scan = new Scanner(System.in);
+                request = scan.nextLine();
                 System.out.println(request);
                 out.println(request);
             }
