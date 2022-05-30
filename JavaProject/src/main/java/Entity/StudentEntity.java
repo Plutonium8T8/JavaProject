@@ -54,7 +54,7 @@ public class StudentEntity {
         return idCamera;
     }
 
-    public void setIdCamera(int idCamera) {
+    public void setIdCamera(Integer idCamera) {
         this.idCamera = idCamera;
     }
 

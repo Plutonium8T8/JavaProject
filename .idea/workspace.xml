@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0d648d98-bf1a-4c99-a524-481764fadc61" name="Changes" comment="" />
+    <list default="true" id="0d648d98-bf1a-4c99-a524-481764fadc61" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/Client/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/java/com/example/client/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/java/com/example/client/ClientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/src/main/resources/com/example/client/client-scene1.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/Client/src/main/resources/com/example/client/client-scene1.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JavaProject/src/main/java/Server/ClientThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/JavaProject/src/main/java/Server/ClientThread.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,6 +103,7 @@
       <workItem from="1653605665504" duration="3330000" />
       <workItem from="1653670220064" duration="632000" />
       <workItem from="1653860675032" duration="1819000" />
+      <workItem from="1653929724264" duration="17000" />
     </task>
     <servers />
   </component>

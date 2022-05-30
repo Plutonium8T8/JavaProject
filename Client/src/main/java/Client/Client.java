@@ -11,12 +11,6 @@ import java.util.Scanner;
 
 public class Client {
 
-    private String response;
-
-    public void setResponse(String response)
-    {
-        this.response = response;
-    }
     public void run(){
         String serverAddress = "127.0.0.1"; // The server's IP address
         int PORT = 8100; // The server's port
@@ -29,24 +23,14 @@ public class Client {
             boolean clientIsRunning = true;
             System.out.println("Enter your command:");
             while(clientIsRunning){
-                if (response == "stop")
-                {
-                    clientIsRunning = false;
-                }
-
                 Scanner scan = new Scanner(System.in);
                 String request = scan.nextLine();
 
                 out.println(request);
-                response = in.readLine ();
+                String response = in.readLine ();
             }
         } catch (IOException e) {
             System.err.println("No server listening... " + e);
         }
-    }
-
-    public void stop()
-    {
-        setResponse("stop");
     }
 }

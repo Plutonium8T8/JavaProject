@@ -146,19 +146,16 @@ public class RepositoryStudent implements Repository<StudentEntity>{
     public StudentEntity findById(int queryId) {
         StudentEntity returnStudentEntity = new StudentEntity();
         Integer idCamera=null;
-        Query existsQuery = em.createNativeQuery("select id FROM student WHERE id = ?1");
-        existsQuery.setParameter(1, queryId);
-        Object result = existsQuery.getSingleResult();
-        Integer id = ((Number) result).intValue();
+        Query existsQuery;
+        Object result;
 
         existsQuery = em.createNativeQuery("select id_camera FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-        if (result == null) {
-            idCamera = 0;
-        }
-        else {
+        if (result != null) {
             idCamera = ((Number) result).intValue();
+            returnStudentEntity.setReferencedCamera(localCameraRepository.findById(idCamera));
+            returnStudentEntity.setIdCamera(idCamera);
         }
 
         existsQuery = em.createNativeQuery("select nume FROM student WHERE id = ?1");
@@ -185,13 +182,6 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
         Float medie = ((Float) result).floatValue();
-
-        returnStudentEntity.setId(id);
-        returnStudentEntity.setIdCamera(idCamera);
-        if (!idCamera.equals(0))
-        {
-            returnStudentEntity.setReferencedCamera(localCameraRepository.findById(idCamera));
-        }
         returnStudentEntity.setMedie(medie);
         returnStudentEntity.setNationalitate(nationalitate);
         returnStudentEntity.setNume(nume);
