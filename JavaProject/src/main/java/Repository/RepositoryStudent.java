@@ -49,7 +49,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return true;
     }
     @Override
-    public Iterable<StudentEntity> findAll() {
+    public List<StudentEntity> findAll() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
         Query findQuery = em.createNativeQuery("SELECT * FROM student");
 
@@ -60,15 +60,16 @@ public class RepositoryStudent implements Repository<StudentEntity>{
             StudentEntity student = new StudentEntity();
             Object[] obj = (Object[]) itr.next();
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
-            Integer idCamera = Integer.parseInt(String.valueOf(obj[1]));
+            if (obj[1] != null) {
+                student.setReferencedCamera(localCameraRepository.findById(Integer.parseInt(String.valueOf(obj[1]))));
+                student.setIdCamera(student.getReferencedCamera().getId());
+            }
             String nume = String.valueOf(obj[2]);
             String sex = String.valueOf(obj[3]);
             String nationalitate = String.valueOf(obj[4]);
             Float medie = Float.valueOf(String.valueOf(obj[5]));
             String prenume = String.valueOf(obj[6]);
             student.setId(id);
-            student.setIdCamera(idCamera);
-            student.setReferencedCamera(localCameraRepository.findById(idCamera));
             student.setNume(nume);
             student.setPrenume(prenume);
             student.setSex(sex);
@@ -79,9 +80,9 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return resultList;
     }
 
-    public Iterable<StudentEntity> findAllF() {
+    public List<StudentEntity> findAllF() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
-        Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = female");
+        Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = \'female\'");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
         Iterator itr = result.iterator();
@@ -90,15 +91,16 @@ public class RepositoryStudent implements Repository<StudentEntity>{
             StudentEntity student = new StudentEntity();
             Object[] obj = (Object[]) itr.next();
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
-            Integer idCamera = Integer.parseInt(String.valueOf(obj[1]));
+            if (obj[1] != null) {
+                student.setReferencedCamera(localCameraRepository.findById(Integer.parseInt(String.valueOf(obj[1]))));
+                student.setIdCamera(student.getReferencedCamera().getId());
+            }
             String nume = String.valueOf(obj[2]);
             String sex = String.valueOf(obj[3]);
             String nationalitate = String.valueOf(obj[4]);
             Float medie = Float.valueOf(String.valueOf(obj[5]));
             String prenume = String.valueOf(obj[6]);
             student.setId(id);
-            student.setIdCamera(idCamera);
-            student.setReferencedCamera(localCameraRepository.findById(idCamera));
             student.setNume(nume);
             student.setPrenume(prenume);
             student.setSex(sex);
@@ -109,9 +111,9 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return resultList;
     }
 
-    public Iterable<StudentEntity> findAllM() {
+    public List<StudentEntity> findAllM() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
-        Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = male");
+        Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = \'male\'");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
         Iterator itr = result.iterator();
@@ -120,15 +122,16 @@ public class RepositoryStudent implements Repository<StudentEntity>{
             StudentEntity student = new StudentEntity();
             Object[] obj = (Object[]) itr.next();
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
-            Integer idCamera = Integer.parseInt(String.valueOf(obj[1]));
-            student.setReferencedCamera(localCameraRepository.findById(idCamera));
+            if (obj[1] != null) {
+                student.setReferencedCamera(localCameraRepository.findById(Integer.parseInt(String.valueOf(obj[1]))));
+                student.setIdCamera(student.getReferencedCamera().getId());
+            }
             String nume = String.valueOf(obj[2]);
             String sex = String.valueOf(obj[3]);
             String nationalitate = String.valueOf(obj[4]);
             Float medie = Float.valueOf(String.valueOf(obj[5]));
             String prenume = String.valueOf(obj[6]);
             student.setId(id);
-            student.setIdCamera(idCamera);
             student.setNume(nume);
             student.setPrenume(prenume);
             student.setSex(sex);

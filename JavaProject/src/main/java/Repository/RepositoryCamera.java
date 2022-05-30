@@ -49,7 +49,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
     }
 
     @Override
-    public Iterable<CameraEntity> findAll() {
+    public List<CameraEntity> findAll() {
         ArrayList<CameraEntity> resultList = new ArrayList<>();
         Query findQuery = em.createNativeQuery("SELECT * FROM camera");
 
