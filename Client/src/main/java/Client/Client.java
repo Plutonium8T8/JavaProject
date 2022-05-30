@@ -18,6 +18,7 @@ public class Client {
                      new InputStreamReader(socket.getInputStream()))) {
             // Send a request to the server
             out.println(message);
+            boolean clientIsRunning = true;
         } catch (IOException e) {
             System.err.println("No server listening... " + e);
         }
