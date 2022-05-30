@@ -24,12 +24,12 @@ public class Client {
             System.out.println("Enter your command:");
             while (clientIsRunning) {
                 Scanner scan = new Scanner(System.in);
-                String request = scan.nextLine();
+                //String request = scan.nextLine();
                 if(response == "stop")
                 {
                     clientIsRunning = false;
                 }
-                out.println(request);
+                //out.println(request);
                 response = in.readLine();
             }
         } catch (IOException e) {
