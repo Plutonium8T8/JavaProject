@@ -182,7 +182,7 @@ class ClientThread extends Thread {
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
                 //loadDB();
-                distribution();
+                //distribution();
                 String request = in.readLine();
                 // Send the response to the oputput stream: server → client
                 PrintWriter out = new PrintWriter(socket.getOutputStream());
