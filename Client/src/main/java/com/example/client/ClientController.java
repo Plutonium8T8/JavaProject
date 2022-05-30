@@ -31,6 +31,7 @@ public class ClientController {
     }
 
     public void switchScene1(ActionEvent event) throws IOException {
+        startClient();
         root = FXMLLoader.load(getClass().getResource("client-scene1.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
