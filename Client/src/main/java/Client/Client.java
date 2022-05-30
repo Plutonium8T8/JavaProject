@@ -9,11 +9,7 @@ import java.util.Scanner;
 
 public class Client {
 
-    private String response;
-
-    public void setResponse(String response) {
-        this.response = response;
-    }
+    public String response;
 
     public void run() {
         String serverAddress = "127.0.0.1"; // The server's IP address
@@ -25,15 +21,13 @@ public class Client {
                      new InputStreamReader(socket.getInputStream()))) {
             // Send a request to the server
             boolean clientIsRunning = true;
-            System.out.println("Enter your command:");
             while (clientIsRunning) {
-                if (response == "stop") {
-                    clientIsRunning = false;
-                }
-
                 Scanner scan = new Scanner(System.in);
                 String request = scan.nextLine();
-
+                if(response == "stop")
+                {
+                    clientIsRunning = false;
+                }
                 out.println(request);
                 response = in.readLine();
             }
@@ -43,6 +37,6 @@ public class Client {
     }
 
     public void stop() {
-        setResponse("stop");
+        response = "stop";
     }
 }

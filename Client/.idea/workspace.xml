@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a54c839c-7324-4c3c-a0d4-efd2ec0c090f" name="Changes" comment="" />
+    <list default="true" id="d78152b0-bed7-43e8-a7ae-59223495d0e3" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,7 +16,16 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="29qbHIHyojiaBmic1CLUpIhqLHB" />
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="29tIql5ChhJjUO1DTyAXsuTvctR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -26,13 +35,25 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Cristian/OneDrive/Documents/GitHub/JavaProject",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.JavaFX"
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "C:/Users/Cristian/OneDrive/Documents/GitHub/JavaProject/Client",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Cristian\OneDrive\Documents\GitHub\JavaProject\Client\src\main\resources\com\example\client" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.example.client" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.client" />
+      <recent name="Client" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="ClientApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.client.ClientApplication" />
@@ -56,12 +77,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a54c839c-7324-4c3c-a0d4-efd2ec0c090f" name="Changes" comment="" />
-      <created>1653843476100</created>
+      <changelist id="d78152b0-bed7-43e8-a7ae-59223495d0e3" name="Changes" comment="" />
+      <created>1653926149555</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1653843476100</updated>
-      <workItem from="1653843477843" duration="7347000" />
+      <updated>1653926149555</updated>
+      <workItem from="1653926584063" duration="159000" />
+      <workItem from="1653926760241" duration="646000" />
+      <workItem from="1653927430856" duration="1549000" />
+      <workItem from="1653932440968" duration="1519000" />
     </task>
     <servers />
   </component>
