@@ -19,6 +19,8 @@ import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
@@ -26,8 +28,7 @@ public class ClientController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-    Client client = new Client();
+    private Client client = new Client();
     @FXML
     private ChoiceBox<String> sex = new ChoiceBox<>();
 
@@ -36,39 +37,50 @@ public class ClientController implements Initializable {
 
     @FXML
     private TextField prenume;
-
     @FXML
     private TextField nationalitate;
 
     @FXML
     private TextField medie;
 
+    @FXML
+    private TextField numeCamin;
 
-    @FXML TextField numeCamin;
+    @FXML
+    private TextField capacitate;
 
+    @FXML
+    private TextField idCaminRef;
 
-    @FXML TextField capacitate;
+    @FXML
+    private TextField removeById;
 
+    @FXML
+    private TextField idGetter;
 
-    @FXML TextField idCaminRef;
+    @FXML
+    private TableView<Student> studTable;
 
-    @FXML TextField removeById;
+    @FXML
+    private TableColumn<Student, String> numeCol;
 
-    @FXML TableView<Student> studTable;
+    @FXML
+    private TableColumn<Student, String> prenumeCol;
 
-    @FXML TableColumn<Student, String> numeCol;
+    @FXML
+    private TableColumn<Student, String> medieCol;
 
-    @FXML TableColumn<Student, String> prenumeCol;
+    @FXML
+    private TableColumn<Student, String> sexCol;
 
-    @FXML TableColumn<Student, String> medieCol;
+    @FXML
+    private TableColumn<Student, String> cameraCol;
 
-    @FXML TableColumn<Student, String> sexCol;
+    @FXML
+    private TableColumn<Student, String> prefCol;
 
-    @FXML TableColumn<Student, String> cameraCol;
-
-    @FXML TableColumn<Student, String> prefCol;
-
-    @FXML TableColumn<Student, String> natCol;
+    @FXML
+    private TableColumn<Student, String> natCol;
     private String[] sexChoice = {"male", "female"};
 
     @Override
@@ -86,7 +98,12 @@ public class ClientController implements Initializable {
         cameraCol.setCellValueFactory(new PropertyValueFactory<Student, String>("IdCaminStudent"));
         prefCol.setCellValueFactory(new PropertyValueFactory<Student, String>("CameraPrefStudent"));
         natCol.setCellValueFactory(new PropertyValueFactory<Student, String>("Nationalitate"));
-        Student student = new Student("1","1","1","1","1","1","11111111111111");
+
+        client.sendMessage( "showStudent," + idGetter.getText());
+        List<String> mesaj = new ArrayList<>();
+        mesaj = List.of(client.recieveMessage().split(","));
+
+        Student student = new Student(mesaj.get(0),mesaj.get(1),mesaj.get(2),mesaj.get(3),mesaj.get(4),mesaj.get(5),mesaj.get(6));
         ObservableList<Student> students = studTable.getItems();
         students.add(student);
         studTable.setItems(students);
@@ -219,13 +236,6 @@ public class ClientController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void showStudent()
-    {
-        client.sendMessage("showStudent");
-        String student = client.recieveMessage();
-    }
-
     public void switchScene2(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
