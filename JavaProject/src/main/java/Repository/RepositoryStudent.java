@@ -151,14 +151,13 @@ public class RepositoryStudent implements Repository<StudentEntity>{
     @Override
     public StudentEntity findById(int queryId) {
         StudentEntity returnStudentEntity = new StudentEntity();
-        Integer idCamera;
+        Integer idCamera=null;
         Query existsQuery;
         Object result;
 
         existsQuery = em.createNativeQuery("select id_camera FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-
         if (result != null) {
             idCamera = ((Number) result).intValue();
             returnStudentEntity.setReferencedCamera(localCameraRepository.findById(idCamera));
@@ -193,7 +192,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         existsQuery = em.createNativeQuery("select camera_pref FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-        Integer cameraPref = (Integer)result;
+        Integer cameraPref = (Integer) result;
 
         returnStudentEntity.setMedie(medie);
         returnStudentEntity.setNationalitate(nationalitate);
