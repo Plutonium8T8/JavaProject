@@ -34,9 +34,9 @@ class ClientThread extends Thread {
 
     private void deleteDBStuds(){
         try {
-                transaction.begin();
-                studentRepository.deleteAll();
-                transaction.commit();
+            transaction.begin();
+            studentRepository.deleteAll();
+            transaction.commit();
 
         } finally{
             if (transaction.isActive()) {
@@ -113,174 +113,104 @@ class ClientThread extends Thread {
                 .sorted(Comparator.comparing(CameraEntity::getId))
                 .collect(Collectors.toList());
 
-        int rand;   //rand=1 randul baietilor la distribuire, rand =2 randul fetelor la distribuire
-        if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie())
-            rand=1;
-        else rand=2;
-
         for (CameraEntity str : sortedcamera ){
-            if (rand == 1){
-                List <Integer> indexStud = new ArrayList<>();
-                for (StudentEntity str2 : sortedmales){
-                    if (str.getCapacitate() > 0 && str2.getCameraPref() == str.getId()){
-                        indexStud.add(str2.getId());
+            if(!sortedfemales.equals(Collections.emptyList()) && !sortedmales.equals(Collections.emptyList()))
+            {
+                List<Integer> indexMales = new ArrayList<>();
+                int index = 0;
+                while (indexMales.size() < str.getCapacitate() && index < sortedmales.size())
+                {
+                    if(sortedmales.get(index).getCameraPref() == str.getId())
+                    {
+                        indexMales.add(index);
+                    }
+                    index++;
+                }
+
+                List<Integer> indexFemales = new ArrayList<>();
+                index = 0;
+                while (indexFemales.size() < str.getCapacitate() && index < sortedfemales.size())
+                {
+                    if(sortedfemales.get(index).getCameraPref() == str.getId())
+                    {
+                        indexFemales.add(index);
+                    }
+                    index++;
+                }
+
+                if (sortedmales.get(indexMales.get(0)).getMedie() > sortedfemales.get(indexFemales.get(0)).getMedie()) {
+                    for (int indexFor : indexMales)
+                    {
                         transaction.begin();
                         StudentEntity student;
-                        student = studentRepository.findById(str2.getId());
+                        student = studentRepository.findById(sortedmales.get(indexFor).getId());
                         student.setReferencedCamera(str);
                         student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(str2.getId());
+                        studentRepository.deleteById(student.getId());
                         transaction.commit();
                         transaction.begin();
                         studentRepository.save(student);
-                        str.setCapacitate(str.getCapacitate()-1);
                         transaction.commit();
-                    }else{
-                        break;
+
+                        sortedmales.get(indexFor).setMedie(null);
                     }
                 }
-                for (int i=1;i<=indexStud.size();i++) {
-                    sortedmales.remove(0);
-                }
-                if(!sortedmales.equals(Collections.emptyList()))
-                {
-                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
-                        rand = 1;
-                    }
-                    else {
-                        rand = 2;
-                    }
-                }
-            }
-            else{
-                for (StudentEntity str2 : sortedfemales){
-                    if (str.getCapacitate() > 0){
-                        counter++;
+                else {
+                    for (int indexFor : indexFemales)
+                    {
                         transaction.begin();
                         StudentEntity student;
-                        student = studentRepository.findById(str2.getId());
+                        student = studentRepository.findById(sortedfemales.get(indexFor).getId());
                         student.setReferencedCamera(str);
                         student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(str2.getId());
+                        studentRepository.deleteById(student.getId());
                         transaction.commit();
                         transaction.begin();
                         studentRepository.save(student);
-                        str.setCapacitate(str.getCapacitate()-1);
                         transaction.commit();
-                    }else{
-                        break;
-                    }
-                }
-                for (int i = 1; i <= counter; i++) {
-                    sortedfemales.remove(0);
-                }
-                if(!sortedfemales.equals(Collections.emptyList()))
-                {
-                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
-                        rand = 1;
-                    }
-                    else {
-                        rand = 2;
+
+                        sortedfemales.get(indexFor).setMedie(null);
                     }
                 }
             }
         }
 
-        for (CameraEntity str : sortedcamera ){
-            int counter = 0;
-            if (rand == 1){
-                for (StudentEntity str2 : sortedmales){
-                    if (str.getCapacitate() > 0){
-                        counter++;
-                        transaction.begin();
-                        StudentEntity student;
-                        student = studentRepository.findById(str2.getId());
-                        student.setReferencedCamera(str);
-                        student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(str2.getId());
-                        transaction.commit();
-                        transaction.begin();
-                        studentRepository.save(student);
-                        str.setCapacitate(str.getCapacitate()-1);
-                        transaction.commit();
-                    }else{
-                        break;
-                    }
-                }
-                for (int i=1;i<=counter;i++) {
-                    sortedmales.remove(0);
-                }
-                if(!sortedmales.equals(Collections.emptyList()))
-                {
-                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
-                        rand = 1;
-                    }
-                    else {
-                        rand = 2;
-                    }
-                }
-            }
-            else{
-                for (StudentEntity str2 : sortedfemales){
-                    if (str.getCapacitate() > 0){
-                        counter++;
-                        transaction.begin();
-                        StudentEntity student;
-                        student = studentRepository.findById(str2.getId());
-                        student.setReferencedCamera(str);
-                        student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(str2.getId());
-                        transaction.commit();
-                        transaction.begin();
-                        studentRepository.save(student);
-                        str.setCapacitate(str.getCapacitate()-1);
-                        transaction.commit();
-                    }else{
-                        break;
-                    }
-                }
-                for (int i = 1; i <= counter; i++) {
-                    sortedfemales.remove(0);
-                }
-                if(!sortedfemales.equals(Collections.emptyList()))
-                {
-                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
-                        rand = 1;
-                    }
-                    else {
-                        rand = 2;
-                    }
-                }
+        for (StudentEntity std : sortedmales)
+        {
+            if (std.getMedie() != null) {
+                transaction.begin();
+                StudentEntity student;
+                student = studentRepository.findById(std.getId());
+                student.setReferencedCamera(null);
+                student.setIdCamera(null);
+                studentRepository.deleteById(std.getId());
+                transaction.commit();
+                transaction.begin();
+                studentRepository.save(student);
+                transaction.commit();
             }
         }
 
-        for (StudentEntity str2 : sortedmales) {
-            transaction.begin();
-            StudentEntity student;
-            student = studentRepository.findById(str2.getId());
-            student.setReferencedCamera(null);
-            student.setIdCamera(null);
-            studentRepository.deleteById(str2.getId());
-            transaction.commit();
-            transaction.begin();
-            studentRepository.save(student);
-            transaction.commit();
+        for (StudentEntity std : sortedfemales)
+        {
+            if (std.getMedie() != null)
+            {
+                transaction.begin();
+                StudentEntity student;
+                student = studentRepository.findById(std.getId());
+                student.setReferencedCamera(null);
+                student.setIdCamera(null);
+                studentRepository.deleteById(std.getId());
+                transaction.commit();
+                transaction.begin();
+                studentRepository.save(student);
+                transaction.commit();
+            }
         }
 
-        for (StudentEntity str2 : sortedfemales) {
-            transaction.begin();
-            StudentEntity student;
-            student = studentRepository.findById(str2.getId());
-            student.setReferencedCamera(null);
-            student.setIdCamera(null);
-            studentRepository.deleteById(str2.getId());
-            transaction.commit();
-            transaction.begin();
-            studentRepository.save(student);
-            transaction.commit();
-        }
         System.out.println("Distribution done!");
     }
+
     public void run () {
         try {
             boolean serverIsRunning = true;
@@ -359,3 +289,4 @@ class ClientThread extends Thread {
         DBAccess.closeConnection();
     }
 }
+

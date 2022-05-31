@@ -1,6 +1,8 @@
 package com.example.client;
 
 import Client.Client;
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +11,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
@@ -50,6 +54,21 @@ public class ClientController implements Initializable {
 
     @FXML TextField removeById;
 
+    @FXML TableView<Student> studTable;
+
+    @FXML TableColumn<Student, String> numeCol;
+
+    @FXML TableColumn<Student, String> prenumeCol;
+
+    @FXML TableColumn<Student, String> medieCol;
+
+    @FXML TableColumn<Student, String> sexCol;
+
+    @FXML TableColumn<Student, String> cameraCol;
+
+    @FXML TableColumn<Student, String> prefCol;
+
+    @FXML TableColumn<Student, String> natCol;
     private String[] sexChoice = {"male", "female"};
 
     @Override
@@ -58,6 +77,98 @@ public class ClientController implements Initializable {
         sex.getItems().addAll(sexChoice);
     }
 
+    public void addTable()
+    {
+        numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
+        prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
+        medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
+        sexCol.setCellValueFactory(new PropertyValueFactory<Student, String>("SexStudent"));
+        cameraCol.setCellValueFactory(new PropertyValueFactory<Student, String>("IdCaminStudent"));
+        prefCol.setCellValueFactory(new PropertyValueFactory<Student, String>("CameraPrefStudent"));
+        natCol.setCellValueFactory(new PropertyValueFactory<Student, String>("Nationalitate"));
+        Student student = new Student("1","1","1","1","1","1","11111111111111");
+        ObservableList<Student> students = studTable.getItems();
+        students.add(student);
+        studTable.setItems(students);
+    }
+
+    public class Student
+    {
+        public String getNumeStudent() {
+            return numeStudent;
+        }
+
+        public String getPrenumeStudent() {
+            return prenumeStudent;
+        }
+
+        public String getSexStudent() {
+            return sexStudent;
+        }
+
+        public String getMedieStudent() {
+            return medieStudent;
+        }
+
+        public String getIdCaminStudent() {
+            return idCaminStudent;
+        }
+
+        public String getCameraPrefStudent() {
+            return cameraPrefStudent;
+        }
+
+        public String getNationalitate() {
+            return nationalitate;
+        }
+
+        String numeStudent;
+        String prenumeStudent;
+        String sexStudent;
+        String medieStudent;
+        String idCaminStudent;
+        String cameraPrefStudent;
+        String nationalitate;
+
+        public void setNumeStudent(String numeStudent) {
+            this.numeStudent = numeStudent;
+        }
+
+        public void setPrenumeStudent(String prenumeStudent) {
+            this.prenumeStudent = prenumeStudent;
+        }
+
+        public void setSexStudent(String sexStudent) {
+            this.sexStudent = sexStudent;
+        }
+
+        public void setMedieStudent(String medieStudent) {
+            this.medieStudent = medieStudent;
+        }
+
+        public void setIdCaminStudent(String idCaminStudent) {
+            this.idCaminStudent = idCaminStudent;
+        }
+
+        public void setCameraPrefStudent(String cameraPrefStudent) {
+            this.cameraPrefStudent = cameraPrefStudent;
+        }
+
+        public void setNationalitate(String nationalitate) {
+            this.nationalitate = nationalitate;
+        }
+
+        Student(String numeStudent, String prenumeStudent, String sexStudent, String medieStudent, String idCaminStudent, String cameraPrefStudent, String nationalitate)
+        {
+            this.numeStudent = numeStudent;
+            this.prenumeStudent = prenumeStudent;
+            this.cameraPrefStudent = cameraPrefStudent;
+            this.idCaminStudent = idCaminStudent;
+            this.nationalitate = nationalitate;
+            this.medieStudent = medieStudent;
+            this.sexStudent = sexStudent;
+        }
+    }
     public void sendMessage(String message)
     {
         client.sendMessage(message);
@@ -109,6 +220,12 @@ public class ClientController implements Initializable {
         stage.show();
     }
 
+    public void showStudent()
+    {
+        client.sendMessage("showStudent");
+        String student = client.recieveMessage();
+    }
+
     public void switchScene2(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -146,6 +263,7 @@ public class ClientController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+        System.out.println(studTable);
     }
 
     public void switchScene7(ActionEvent event) throws IOException {
