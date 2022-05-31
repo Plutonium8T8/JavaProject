@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.client.ClientController">
+   <children>
+      <Pane fx:id="scene9" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <Button fx:id="remove" layoutX="529.0" layoutY="361.0" mnemonicParsing="false" onAction="#removeById" prefHeight="35.0" prefWidth="223.0" text="Remove" />
+            <TextField fx:id="removeById" layoutX="528.0" layoutY="299.0" prefHeight="35.0" prefWidth="223.0" />
+            <Text layoutX="560.0" layoutY="282.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Remove by ID" textAlignment="CENTER" wrappingWidth="159.0" />
+            <Button fx:id="back" layoutX="528.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchScene2" prefHeight="35.0" prefWidth="223.0" text="Back" />
+         </children>
+      </Pane>
+   </children>
+</Pane>

@@ -25,7 +25,7 @@ public class ClientController implements Initializable {
 
     Client client = new Client();
     @FXML
-    private ChoiceBox<String> sex = new ChoiceBox<String>();
+    private ChoiceBox<String> sex = new ChoiceBox<>();
 
     @FXML
     private TextField nume;
@@ -47,6 +47,8 @@ public class ClientController implements Initializable {
 
 
     @FXML TextField idCaminRef;
+
+    @FXML TextField removeById;
 
     private String[] sexChoice = {"male", "female"};
 
@@ -93,7 +95,12 @@ public class ClientController implements Initializable {
         String message = "addCamera," + idCaminRef.getText() + "," + capacitate.getText();
         client.sendMessage(message);
     }
-    
+
+    public void removeById ()
+    {
+        String message = "removeStudent," + removeById.getText();
+        client.sendMessage(message);
+    }
     public void switchScene1(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
