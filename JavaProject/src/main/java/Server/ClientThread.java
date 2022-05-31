@@ -275,6 +275,15 @@ class ClientThread extends Thread {
                         PrintWriter out = new PrintWriter(socket.getOutputStream());
                         //out = studentRepository.toString();
                     }
+
+                    if (message[0].equals("showStudent"))
+                    {
+                        PrintWriter out = new PrintWriter(socket.getOutputStream());
+                        StudentEntity student =studentRepository.findById(Integer.parseInt(message[1]));
+                        out.print( student.toString());
+                        out.flush();
+                    }
+
                 }
             }
         } catch (IOException e) {
