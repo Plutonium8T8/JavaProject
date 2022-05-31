@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.client.ClientController">
    <children>
-      <Pane fx:id="scene9" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
+      <Pane fx:id="scene9" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0">
          <children>
             <Button fx:id="remove" layoutX="529.0" layoutY="361.0" mnemonicParsing="false" onAction="#removeById" prefHeight="35.0" prefWidth="223.0" text="Remove" />
             <TextField fx:id="removeById" layoutX="528.0" layoutY="299.0" prefHeight="35.0" prefWidth="223.0" />
