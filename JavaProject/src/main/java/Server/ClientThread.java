@@ -21,14 +21,32 @@ import java.util.stream.Collectors;
 
 class ClientThread extends Thread {
     private Socket socket = null ;
+
     RepositoryStudent studentRepository = new RepositoryStudent();
 
     RepositoryCamera cameraRepository = new RepositoryCamera();
+
+    EntityManager entityManager = DBAccess.getInstance();
+
+    EntityTransaction transaction = entityManager.getTransaction();
+
     public ClientThread (Socket socket) { this.socket = socket ; }
 
+    private void deleteDBStuds(){
+        try {
+                transaction.begin();
+                studentRepository.deleteAll();
+                transaction.commit();
+
+        } finally{
+            if (transaction.isActive()) {
+                transaction.rollback();
+
+            }
+        }
+        System.out.println("Delete done!");
+    }
     private void loadDB(){
-        EntityManager entityManager = DBAccess.getInstance();
-        EntityTransaction transaction = entityManager.getTransaction();
         try {
             CSVReader reader = null;
             reader = new CSVReader(new FileReader("src/main/java/studenti.csv"));
@@ -64,16 +82,13 @@ class ClientThread extends Thread {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            DBAccess.closeConnection();
         }
+        System.out.println("Load done!");
     }
 
     private void distribution(){
         List <StudentEntity> males = new ArrayList<>();
         List <StudentEntity> females = new ArrayList<>();
-
-        EntityManager entityManager = DBAccess.getInstance();
-        EntityTransaction transaction = entityManager.getTransaction();
 
         males = studentRepository.findAllM();
         females = studentRepository.findAllF();
@@ -88,23 +103,25 @@ class ClientThread extends Thread {
 
         Collections.reverse(sortedmales);
         Collections.reverse(sortedfemales);
-        List <CameraEntity> camera = new ArrayList<>();
+
+        List <CameraEntity> camera;
         camera = cameraRepository.findAll();
-        System.out.println(camera.size());
+        List <CameraEntity> sortedcamera = camera.stream()
+                .sorted(Comparator.comparing(CameraEntity::getId))
+                .collect(Collectors.toList());
+
         int rand;   //rand=1 randul baietilor la distribuire, rand =2 randul fetelor la distribuire
-        if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
+        if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie())
             rand=1;
         else rand=2;
 
-        for (CameraEntity str : camera ){
-            System.out.println(str);
+        for (CameraEntity str : sortedcamera ){
             if (rand == 1){
                 int counter = 0;
                 for (StudentEntity str2 : sortedmales){
                     if (str.getCapacitate() > 0){
                         counter++;
                         transaction.begin();
-                        System.out.println(str2);
                         StudentEntity student;
                         student = studentRepository.findById(str2.getId());
                         student.setReferencedCamera(str);
@@ -120,12 +137,11 @@ class ClientThread extends Thread {
                     }
                 }
                 for (int i=1;i<=counter;i++) {
-                    System.out.println("+++");
-                    System.out.println(sortedmales.remove(1));
+                    sortedmales.remove(0);
                 }
                 if(!sortedmales.equals(Collections.emptyList()))
                 {
-                    if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
+                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie())
                         rand=1;
                     else rand=2;
                 }
@@ -150,19 +166,14 @@ class ClientThread extends Thread {
                         break;
                     }
                 }
-                System.out.println(sortedfemales.get(1));
-                System.out.println(sortedfemales.size());
-                System.out.println(str.getCapacitate());
                 for (int i=1;i<=counter;i++) {
-                    System.out.println("+++");
-                    System.out.println(sortedfemales.remove(1));
+                    sortedfemales.remove(0);
                 }
-                System.out.println(sortedfemales.get(1));
-                if (sortedmales.get(1).getMedie() > sortedfemales.get(1).getMedie())
+                if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie())
                     rand=1;
                 else rand=2;
             }
-            System.out.println(rand);
+
         }
 
         for (StudentEntity str2 : sortedmales) {
@@ -190,22 +201,41 @@ class ClientThread extends Thread {
             studentRepository.save(student);
             transaction.commit();
         }
+        System.out.println("Distribution done!");
     }
     public void run () {
         try {
             while (true){
-                //studentRepository.deleteAll();
                 // Get the request from the input stream: client → server
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
-                //loadDB();
-                //distribution();
                 String request = in.readLine();
                 // Send the response to the oputput stream: server → client
+                if (request!= null)
+                    System.out.println(request);
                 PrintWriter out = new PrintWriter(socket.getOutputStream());
-                if(request == "removeAllStudents") studentRepository.deleteAll();
-                if(request == "addStudents") loadDB();
-                if(request == "distributeStudents") distribution();
+                if (request != null)
+                {
+                    if(request.equals("removeAllStudents")) deleteDBStuds();
+                    if(request.equals("addStudents")) loadDB();
+                    if(request.equals("distributeStudents")) distribution();
+                    if (request != null){
+                        String[] message = request.split(",");
+                        if(message[0].equals("addStudent")){
+                            String[] student = request.split(",");
+                            StudentEntity newStudent = new StudentEntity();
+                            transaction.begin();
+                            newStudent.setNume(student[1]);
+                            newStudent.setPrenume(student[2]);
+                            newStudent.setSex(student[3]);
+                            newStudent.setNationalitate(student[4]);
+                            newStudent.setMedie(Float.valueOf(student[5]));
+                            studentRepository.save(newStudent);
+                            transaction.commit();
+                        }
+                    }
+
+                }
                 out.flush();
             }
         } catch (IOException e) {
@@ -215,5 +245,6 @@ class ClientThread extends Thread {
                 socket.close(); // or use try-with-resources
             } catch (IOException e) { System.err.println (e); }
         }
+        DBAccess.closeConnection();
     }
 }
