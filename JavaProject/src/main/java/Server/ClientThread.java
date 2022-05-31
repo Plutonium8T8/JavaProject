@@ -211,6 +211,7 @@ class ClientThread extends Thread {
                         new InputStreamReader(socket.getInputStream()));
                 String request = in.readLine();
                 // Send the response to the oputput stream: server → client
+                System.out.println(request);
                 if (request!= null)
                     System.out.println(request);
                 PrintWriter out = new PrintWriter(socket.getOutputStream());
