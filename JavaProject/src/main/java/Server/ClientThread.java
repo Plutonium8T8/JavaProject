@@ -2,6 +2,7 @@ package Server;
 
 import DataBaseAccess.DBAccess;
 import Entity.CameraEntity;
+import Entity.CaminEntity;
 import Entity.StudentEntity;
 import Repository.RepositoryCamera;
 import Repository.RepositoryCamin;
@@ -13,22 +14,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 class ClientThread extends Thread {
-    private Socket socket = null ;
+    private final Socket socket;
+
+    EntityManager entityManager = DBAccess.getInstance();
+
+    EntityTransaction transaction = entityManager.getTransaction();
 
     RepositoryStudent studentRepository = new RepositoryStudent();
 
     RepositoryCamera cameraRepository = new RepositoryCamera();
 
-    EntityManager entityManager = DBAccess.getInstance();
-
-    EntityTransaction transaction = entityManager.getTransaction();
+    RepositoryCamin caminRepository = new RepositoryCamin();
 
     public ClientThread (Socket socket) { this.socket = socket ; }
 
@@ -69,6 +69,9 @@ class ClientThread extends Thread {
                         student.setNationalitate(token);
                     }
                 }
+                Random rand = new Random();
+                List<CameraEntity> listaCamere = cameraRepository.findAll();
+                student.setCameraPref(listaCamere.get(rand.nextInt(listaCamere.size())).getId());
                 studentRepository.save(student);
                 transaction.commit();
             }
@@ -87,8 +90,8 @@ class ClientThread extends Thread {
     }
 
     private void distribution(){
-        List <StudentEntity> males = new ArrayList<>();
-        List <StudentEntity> females = new ArrayList<>();
+        List <StudentEntity> males;
+        List <StudentEntity> females;
 
         males = studentRepository.findAllM();
         females = studentRepository.findAllF();
@@ -117,7 +120,75 @@ class ClientThread extends Thread {
 
         for (CameraEntity str : sortedcamera ){
             if (rand == 1){
-                int counter = 0;
+                List <Integer> indexStud = new ArrayList<>();
+                for (StudentEntity str2 : sortedmales){
+                    if (str.getCapacitate() > 0 && str2.getCameraPref() == str.getId()){
+                        indexStud.add(str2.getId());
+                        transaction.begin();
+                        StudentEntity student;
+                        student = studentRepository.findById(str2.getId());
+                        student.setReferencedCamera(str);
+                        student.setIdCamera(student.getReferencedCamera().getId());
+                        studentRepository.deleteById(str2.getId());
+                        transaction.commit();
+                        transaction.begin();
+                        studentRepository.save(student);
+                        str.setCapacitate(str.getCapacitate()-1);
+                        transaction.commit();
+                    }else{
+                        break;
+                    }
+                }
+                for (int i=1;i<=indexStud.size();i++) {
+                    sortedmales.remove(0);
+                }
+                if(!sortedmales.equals(Collections.emptyList()))
+                {
+                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
+                        rand = 1;
+                    }
+                    else {
+                        rand = 2;
+                    }
+                }
+            }
+            else{
+                for (StudentEntity str2 : sortedfemales){
+                    if (str.getCapacitate() > 0){
+                        counter++;
+                        transaction.begin();
+                        StudentEntity student;
+                        student = studentRepository.findById(str2.getId());
+                        student.setReferencedCamera(str);
+                        student.setIdCamera(student.getReferencedCamera().getId());
+                        studentRepository.deleteById(str2.getId());
+                        transaction.commit();
+                        transaction.begin();
+                        studentRepository.save(student);
+                        str.setCapacitate(str.getCapacitate()-1);
+                        transaction.commit();
+                    }else{
+                        break;
+                    }
+                }
+                for (int i = 1; i <= counter; i++) {
+                    sortedfemales.remove(0);
+                }
+                if(!sortedfemales.equals(Collections.emptyList()))
+                {
+                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
+                        rand = 1;
+                    }
+                    else {
+                        rand = 2;
+                    }
+                }
+            }
+        }
+
+        for (CameraEntity str : sortedcamera ){
+            int counter = 0;
+            if (rand == 1){
                 for (StudentEntity str2 : sortedmales){
                     if (str.getCapacitate() > 0){
                         counter++;
@@ -141,13 +212,15 @@ class ClientThread extends Thread {
                 }
                 if(!sortedmales.equals(Collections.emptyList()))
                 {
-                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie())
-                        rand=1;
-                    else rand=2;
+                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
+                        rand = 1;
+                    }
+                    else {
+                        rand = 2;
+                    }
                 }
             }
             else{
-                int counter =0;
                 for (StudentEntity str2 : sortedfemales){
                     if (str.getCapacitate() > 0){
                         counter++;
@@ -166,14 +239,19 @@ class ClientThread extends Thread {
                         break;
                     }
                 }
-                for (int i=1;i<=counter;i++) {
+                for (int i = 1; i <= counter; i++) {
                     sortedfemales.remove(0);
                 }
-                if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie())
-                    rand=1;
-                else rand=2;
+                if(!sortedfemales.equals(Collections.emptyList()))
+                {
+                    if (sortedmales.get(0).getMedie() > sortedfemales.get(0).getMedie()) {
+                        rand = 1;
+                    }
+                    else {
+                        rand = 2;
+                    }
+                }
             }
-
         }
 
         for (StudentEntity str2 : sortedmales) {
@@ -205,46 +283,78 @@ class ClientThread extends Thread {
     }
     public void run () {
         try {
-            while (true){
+            boolean serverIsRunning = true;
+            while (serverIsRunning) {
+
                 // Get the request from the input stream: client → server
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
                 String request = in.readLine();
+
                 // Send the response to the oputput stream: server → client
-                System.out.println(request);
-                if (request!= null)
-                    System.out.println(request);
-                PrintWriter out = new PrintWriter(socket.getOutputStream());
                 if (request != null)
-                {
-                    if(request.equals("removeAllStudents")) deleteDBStuds();
-                    if(request.equals("addStudents")) loadDB();
-                    if(request.equals("distributeStudents")) distribution();
-                    if (request != null){
-                        String[] message = request.split(",");
-                        if(message[0].equals("addStudent")){
-                            String[] student = request.split(",");
-                            StudentEntity newStudent = new StudentEntity();
-                            transaction.begin();
-                            newStudent.setNume(student[1]);
-                            newStudent.setPrenume(student[2]);
-                            newStudent.setSex(student[3]);
-                            newStudent.setNationalitate(student[4]);
-                            newStudent.setMedie(Float.valueOf(student[5]));
-                            studentRepository.save(newStudent);
-                            transaction.commit();
-                        }
+                    System.out.println(request);
+
+                if (request != null) {
+                    if (request.equals("removeAllStudents")) deleteDBStuds();
+
+                    if (request.equals("addStudents")) loadDB();
+
+                    if (request.equals("distributeStudents")) distribution();
+
+                    String[] message = request.split(",");
+
+                    if (message[0].equals("addStudent")) {
+                        StudentEntity newStudent = new StudentEntity();
+                        transaction.begin();
+                        newStudent.setNume(message[1]);
+                        newStudent.setPrenume(message[2]);
+                        newStudent.setSex(message[3]);
+                        newStudent.setNationalitate(message[4]);
+                        newStudent.setMedie(Float.valueOf(message[5]));
+                        studentRepository.save(newStudent);
+                        transaction.commit();
                     }
 
+                    if (message[0].equals("removeStudent")) {
+                        transaction.begin();
+                        studentRepository.deleteById(Integer.parseInt(message[1]));
+                        transaction.commit();
+                    }
+
+                    if (message[0].equals("addCamin")) {
+                        CaminEntity newCamin = new CaminEntity();
+                        transaction.begin();
+                        newCamin.setNume(message[1]);
+                        caminRepository.save(newCamin);
+                        transaction.commit();
+                    }
+
+                    if (message[0].equals("addCamera")) {
+                        CameraEntity newCamera = new CameraEntity();
+                        transaction.begin();
+                        newCamera.setCapacitate(Integer.parseInt(message[2]));
+                        newCamera.setReferencedCamin(caminRepository.findById(Integer.parseInt(message[1])));
+                        newCamera.setIdCamin(newCamera.getReferencedCamin().getId());
+                        cameraRepository.save(newCamera);
+                        transaction.commit();
+                    }
+
+                    if (request.equals("getStudents"))
+                    {
+                        PrintWriter out = new PrintWriter(socket.getOutputStream());
+                        //out = studentRepository.toString();
+                    }
                 }
-                out.flush();
             }
         } catch (IOException e) {
             System.err.println("Communication error... " + e);
         } finally {
             try {
                 socket.close(); // or use try-with-resources
-            } catch (IOException e) { System.err.println (e); }
+            } catch (IOException e) {
+                System.err.println (e);
+            }
         }
         DBAccess.closeConnection();
     }

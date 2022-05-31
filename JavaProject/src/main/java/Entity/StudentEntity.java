@@ -28,6 +28,9 @@ public class StudentEntity {
     @Basic
     @Column(name = "medie")
     private Float medie;
+    @Basic
+    @Column(name = "camera_pref")
+    private Integer cameraPref;
 
     @ManyToOne
     @JoinColumn(name = "id_camera", referencedColumnName = "id")
@@ -48,6 +51,14 @@ public class StudentEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getCameraPref() {
+        return cameraPref;
+    }
+
+    public void setCameraPref(int cameraPref) {
+        this.cameraPref = cameraPref;
     }
 
     public int getIdCamera() {
@@ -110,29 +121,22 @@ public class StudentEntity {
         if (nume != null ? !nume.equals(student.nume) : student.nume != null) return false;
         if (prenume != null ? !prenume.equals(student.prenume) : student.prenume != null) return false;
         if (sex != null ? !sex.equals(student.sex) : student.sex != null) return false;
-        if (nationalitate != null ? !nationalitate.equals(student.nationalitate) : student.nationalitate != null)
-            return false;
+        if (nationalitate != null ? !nationalitate.equals(student.nationalitate) : student.nationalitate != null) return false;
         if (medie != null ? !medie.equals(student.medie) : student.medie != null) return false;
-
+        if (cameraPref != null ? !cameraPref.equals(student.cameraPref) : student.cameraPref != null) return false;
         return true;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        if (idCamera == null)
-        {
-            result = 31 * result + 0;
-        }
-        else
-        {
-            result = 31 * result + idCamera;
-        }
+        result = 31 * result + (idCamera != null ? nume.hashCode() : 0);
         result = 31 * result + (nume != null ? nume.hashCode() : 0);
         result = 31 * result + (prenume != null ? prenume.hashCode() : 0);
         result = 31 * result + (sex != null ? sex.hashCode() : 0);
         result = 31 * result + (nationalitate != null ? nationalitate.hashCode() : 0);
         result = 31 * result + (medie != null ? medie.hashCode() : 0);
+        result = 31 * result + (cameraPref != null ? cameraPref.hashCode() : 0);
         return result;
     }
 
@@ -148,6 +152,7 @@ public class StudentEntity {
                 ", nationalitate='" + nationalitate + '\'' +
                 ", medie=" + medie +
                 ", referencedCamera=" + referencedCamera +
+                ", cameraPref=" + cameraPref +
                 '}';
     }
 }

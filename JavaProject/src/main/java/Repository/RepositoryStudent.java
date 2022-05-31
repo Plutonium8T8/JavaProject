@@ -69,12 +69,14 @@ public class RepositoryStudent implements Repository<StudentEntity>{
             String nationalitate = String.valueOf(obj[4]);
             Float medie = Float.valueOf(String.valueOf(obj[5]));
             String prenume = String.valueOf(obj[6]);
+            Integer cameraPref = Integer.parseInt(String.valueOf(obj[7]));
             student.setId(id);
             student.setNume(nume);
             student.setPrenume(prenume);
             student.setSex(sex);
             student.setNationalitate(nationalitate);
             student.setMedie(medie);
+            student.setCameraPref(cameraPref);
             resultList.add(student);
         }
         return resultList;
@@ -100,12 +102,14 @@ public class RepositoryStudent implements Repository<StudentEntity>{
             String nationalitate = String.valueOf(obj[4]);
             Float medie = Float.valueOf(String.valueOf(obj[5]));
             String prenume = String.valueOf(obj[6]);
+            Integer cameraPref = Integer.parseInt(String.valueOf(obj[7]));
             student.setId(id);
             student.setNume(nume);
             student.setPrenume(prenume);
             student.setSex(sex);
             student.setNationalitate(nationalitate);
             student.setMedie(medie);
+            student.setCameraPref(cameraPref);
             resultList.add(student);
         }
         return resultList;
@@ -131,12 +135,14 @@ public class RepositoryStudent implements Repository<StudentEntity>{
             String nationalitate = String.valueOf(obj[4]);
             Float medie = Float.valueOf(String.valueOf(obj[5]));
             String prenume = String.valueOf(obj[6]);
+            Integer cameraPref = Integer.parseInt(String.valueOf(obj[7]));
             student.setId(id);
             student.setNume(nume);
             student.setPrenume(prenume);
             student.setSex(sex);
             student.setNationalitate(nationalitate);
             student.setMedie(medie);
+            student.setCameraPref(cameraPref);
             resultList.add(student);
         }
         return resultList;
@@ -145,13 +151,14 @@ public class RepositoryStudent implements Repository<StudentEntity>{
     @Override
     public StudentEntity findById(int queryId) {
         StudentEntity returnStudentEntity = new StudentEntity();
-        Integer idCamera=null;
+        Integer idCamera;
         Query existsQuery;
         Object result;
 
         existsQuery = em.createNativeQuery("select id_camera FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
+
         if (result != null) {
             idCamera = ((Number) result).intValue();
             returnStudentEntity.setReferencedCamera(localCameraRepository.findById(idCamera));
@@ -182,12 +189,19 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
         Float medie = ((Float) result).floatValue();
+
+        existsQuery = em.createNativeQuery("select camera_pref FROM student WHERE id = ?1");
+        existsQuery.setParameter(1, queryId);
+        result = existsQuery.getSingleResult();
+        Integer cameraPref = (Integer)result;
+
         returnStudentEntity.setMedie(medie);
         returnStudentEntity.setNationalitate(nationalitate);
         returnStudentEntity.setNume(nume);
         returnStudentEntity.setSex(sex);
         returnStudentEntity.setPrenume(prenume);
         returnStudentEntity.setMedie(medie);
+        returnStudentEntity.setCameraPref(cameraPref);
 
         return returnStudentEntity;
     }
