@@ -146,7 +146,7 @@ class ClientThread extends Thread {
                         student = studentRepository.findById(sortedmales.get(indexFor).getId());
                         student.setReferencedCamera(str);
                         student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(student.getId());
+                        studentRepository.deleteById(sortedmales.get(indexFor).getId());
                         transaction.commit();
                         transaction.begin();
                         studentRepository.save(student);
@@ -163,7 +163,7 @@ class ClientThread extends Thread {
                         student = studentRepository.findById(sortedfemales.get(indexFor).getId());
                         student.setReferencedCamera(str);
                         student.setIdCamera(student.getReferencedCamera().getId());
-                        studentRepository.deleteById(student.getId());
+                        studentRepository.deleteById(sortedfemales.get(indexFor).getId());
                         transaction.commit();
                         transaction.begin();
                         studentRepository.save(student);
