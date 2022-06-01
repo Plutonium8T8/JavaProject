@@ -295,18 +295,22 @@ class ClientThread extends Thread {
                         out.flush();
                     }
 
-                    if (request.equals("getStudents"))
+                    if (request.equals("showStudents"))
                     {
-                        //out = studentRepository.toString();
+                         List <StudentEntity>  students = studentRepository.findAll();
+                         String mesaj = null;
+                         for (StudentEntity str : students){
+                             mesaj = mesaj + str.toString() + ";";
+                         }
+                         out.println(mesaj);
+                         out.flush();
                     }
 
                     if (message[0].equals("showStudent"))
                     {
                         StudentEntity student =studentRepository.findById(Integer.parseInt(message[1]));
-                        System.out.println(student.toString());
-                        String test = student.toString();
-                        out.println( test);
-                        System.out.println("test");
+                        String mesaj = student.toString();
+                        out.println( mesaj);
                         out.flush();
                     }
                 }
