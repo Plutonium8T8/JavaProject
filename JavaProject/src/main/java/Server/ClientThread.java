@@ -224,15 +224,25 @@ class ClientThread extends Thread {
                 String request = in.readLine();
 
                 // Send the response to the oputput stream: server → client
-                if (request != null)
-                    System.out.println(request);
-
                 if (request != null) {
-                    if (request.equals("removeAllStudents")) deleteDBStuds();
+                    if (request.equals("removeAllStudents"))
+                    {
+                        deleteDBStuds();
+                        out.println("like");
+                    }
 
-                    if (request.equals("addStudents")) loadDB();
+                    if (request.equals("addStudents"))
+                    {
+                        loadDB();
+                        out.println("like");
+                    }
 
-                    if (request.equals("distributeStudents")) distribution();
+                    if (request.equals("distributeStudents"))
+                    {
+                        distribution();
+                        out.println("like");
+                    }
+
 
                     String[] message = request.split(",");
 
@@ -246,12 +256,14 @@ class ClientThread extends Thread {
                         newStudent.setMedie(Float.valueOf(message[5]));
                         studentRepository.save(newStudent);
                         transaction.commit();
+                        out.println("like");
                     }
 
                     if (message[0].equals("removeStudent")) {
                         transaction.begin();
                         studentRepository.deleteById(Integer.parseInt(message[1]));
                         transaction.commit();
+                        out.println("like");
                     }
 
                     if (message[0].equals("addCamin")) {
@@ -260,6 +272,7 @@ class ClientThread extends Thread {
                         newCamin.setNume(message[1]);
                         caminRepository.save(newCamin);
                         transaction.commit();
+                        out.println("like");
                     }
 
                     if (message[0].equals("addCamera")) {
@@ -270,6 +283,7 @@ class ClientThread extends Thread {
                         newCamera.setIdCamin(newCamera.getReferencedCamin().getId());
                         cameraRepository.save(newCamera);
                         transaction.commit();
+                        out.println("like");
                     }
 
                     if (request.equals("getStudents"))
@@ -286,7 +300,6 @@ class ClientThread extends Thread {
                         System.out.println("test");
                         out.flush();
                     }
-
                 }
             }
         } catch (IOException e) {
