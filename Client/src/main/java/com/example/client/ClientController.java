@@ -185,7 +185,7 @@ public class ClientController implements Initializable {
         }
     }
     public void sendMessage(String message) throws IOException {
-        client.sendMessage(message);
+        String mesaj = client.sendMessage(message);
     }
 
     public void addStudents() throws IOException {
@@ -202,22 +202,22 @@ public class ClientController implements Initializable {
 
     public void addStudent() throws IOException {
         String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
-        client.sendMessage(message);
+        String mesaj = client.sendMessage(message);
     }
 
     public void addCamin() throws IOException {
         String message = "addCamin," + numeCamin.getText();
-        client.sendMessage(message);
+        String mesaj = client.sendMessage(message);
     }
 
     public void addCamera() throws IOException {
         String message = "addCamera," + idCaminRef.getText() + "," + capacitate.getText();
-        client.sendMessage(message);
+        String mesaj = client.sendMessage(message);
     }
 
     public void removeById () throws IOException {
         String message = "removeStudent," + removeById.getText();
-        client.sendMessage(message);
+        String mesaj = client.sendMessage(message);
     }
     public void switchScene1(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
