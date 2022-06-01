@@ -9,7 +9,7 @@
 
 <Pane fx:id="t" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.client.ClientController">
    <children>
-      <TableView fx:id="studTable" layoutX="14.0" layoutY="14.0" prefHeight="637.0" prefWidth="1248.0">
+      <TableView fx:id="studTable" layoutX="16.0" layoutY="14.0" prefHeight="637.0" prefWidth="1248.0">
         <columns>
           <TableColumn fx:id="numeCol" prefWidth="75.0" text="Nume" />
           <TableColumn fx:id="prenumeCol" prefWidth="75.0" text="Prenume" />
@@ -24,7 +24,7 @@
          </columnResizePolicy>
       </TableView>
       <Button fx:id="back" layoutX="14.0" layoutY="666.0" mnemonicParsing="false" onAction="#switchScene1" prefHeight="40.0" prefWidth="246.0" text="Back" />
-      <Button fx:id="view" layoutX="1016.0" layoutY="666.0" mnemonicParsing="false" onAction="#addTable" prefHeight="40.0" prefWidth="246.0" text="View" />
+      <Button fx:id="view" layoutX="1016.0" layoutY="666.0" mnemonicParsing="false" onAction="#showStudent" prefHeight="40.0" prefWidth="246.0" text="View" />
       <TextField fx:id="idGetter" layoutX="770.0" layoutY="666.0" prefHeight="40.0" prefWidth="212.0" />
       <Text layoutX="603.0" layoutY="695.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Type ID" textAlignment="CENTER" wrappingWidth="166.318359375" />
    </children>

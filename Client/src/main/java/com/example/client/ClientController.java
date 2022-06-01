@@ -89,7 +89,7 @@ public class ClientController implements Initializable {
         sex.getItems().addAll(sexChoice);
     }
 
-    public void addTable() throws IOException {
+    public void showStudent() throws IOException {
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
         medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
@@ -98,13 +98,36 @@ public class ClientController implements Initializable {
         prefCol.setCellValueFactory(new PropertyValueFactory<Student, String>("CameraPrefStudent"));
         natCol.setCellValueFactory(new PropertyValueFactory<Student, String>("Nationalitate"));
 
-        List<String> mesaj = new ArrayList<>();
+        List<String> mesaj;
         mesaj = List.of(client.sendMessage("showStudent," + idGetter.getText()).split(","));
 
         Student student = new Student(mesaj.get(0),mesaj.get(1),mesaj.get(2),mesaj.get(3),mesaj.get(4),mesaj.get(5),mesaj.get(6));
         ObservableList<Student> students = studTable.getItems();
         students.add(student);
         studTable.setItems(students);
+    }
+
+    public void showStudents() throws IOException {
+        numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
+        prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
+        medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
+        sexCol.setCellValueFactory(new PropertyValueFactory<Student, String>("SexStudent"));
+        cameraCol.setCellValueFactory(new PropertyValueFactory<Student, String>("IdCaminStudent"));
+        prefCol.setCellValueFactory(new PropertyValueFactory<Student, String>("CameraPrefStudent"));
+        natCol.setCellValueFactory(new PropertyValueFactory<Student, String>("Nationalitate"));
+
+        List<String> mesaj;
+        mesaj = List.of(client.sendMessage("showStudents").split(";"));
+
+        for (String indexString : mesaj)
+        {
+            List<String> splitIndexString = List.of(indexString.split(","));
+            Student student = new Student(splitIndexString.get(0),splitIndexString.get(1),splitIndexString.get(2),splitIndexString.get(3),splitIndexString.get(4),splitIndexString.get(5),splitIndexString.get(6));
+
+            ObservableList<Student> students = studTable.getItems();
+            students.add(student);
+            studTable.setItems(students);
+        }
     }
 
     public class Student
@@ -125,9 +148,7 @@ public class ClientController implements Initializable {
             return medieStudent;
         }
 
-        public String getIdCaminStudent() {
-            return idCaminStudent;
-        }
+        public String getIdCaminStudent() { return idCaminStudent;}
 
         public String getCameraPrefStudent() {
             return cameraPrefStudent;
@@ -157,9 +178,7 @@ public class ClientController implements Initializable {
             this.sexStudent = sexStudent;
         }
 
-        public void setMedieStudent(String medieStudent) {
-            this.medieStudent = medieStudent;
-        }
+        public void setMedieStudent(String medieStudent) {this.medieStudent = medieStudent;}
 
         public void setIdCaminStudent(String idCaminStudent) {
             this.idCaminStudent = idCaminStudent;
@@ -185,7 +204,7 @@ public class ClientController implements Initializable {
         }
     }
     public void sendMessage(String message) throws IOException {
-        String mesaj = client.sendMessage(message);
+        client.sendMessage(message);
     }
 
     public void addStudents() throws IOException {
@@ -202,22 +221,22 @@ public class ClientController implements Initializable {
 
     public void addStudent() throws IOException {
         String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
-        String mesaj = client.sendMessage(message);
+        client.sendMessage(message);
     }
 
     public void addCamin() throws IOException {
         String message = "addCamin," + numeCamin.getText();
-        String mesaj = client.sendMessage(message);
+        client.sendMessage(message);
     }
 
     public void addCamera() throws IOException {
         String message = "addCamera," + idCaminRef.getText() + "," + capacitate.getText();
-        String mesaj = client.sendMessage(message);
+        client.sendMessage(message);
     }
 
     public void removeById () throws IOException {
         String message = "removeStudent," + removeById.getText();
-        String mesaj = client.sendMessage(message);
+        client.sendMessage(message);
     }
     public void switchScene1(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
@@ -226,15 +245,9 @@ public class ClientController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
     public void switchScene2(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void switchScene3(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("scene3.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -243,14 +256,6 @@ public class ClientController implements Initializable {
 
     public void switchScene4(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene4.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchScene5(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("scene5.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -268,14 +273,6 @@ public class ClientController implements Initializable {
 
     public void switchScene7(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene7.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    public void switchScene8(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("scene8.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
