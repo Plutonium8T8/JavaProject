@@ -111,6 +111,8 @@ public class ClientController implements Initializable {
     public void showStudents() throws IOException {
         ObservableList<Student> students = null;
 
+        studTable.getItems().removeAll(students);
+
         System.out.println(studTable.getItems());
 
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
@@ -124,17 +126,14 @@ public class ClientController implements Initializable {
         List<String> mesaj;
         mesaj = List.of(client.sendMessage("showStudents").split(";"));
 
-        for (String indexString : mesaj)
-        {
+        for (String indexString : mesaj) {
             List<String> splitIndexString = List.of(indexString.split(","));
-            Student student = new Student(splitIndexString.get(0),splitIndexString.get(1),splitIndexString.get(2),splitIndexString.get(3),splitIndexString.get(4),splitIndexString.get(5),splitIndexString.get(6));
+            Student student = new Student(splitIndexString.get(0), splitIndexString.get(1), splitIndexString.get(2), splitIndexString.get(3), splitIndexString.get(4), splitIndexString.get(5), splitIndexString.get(6));
 
             students = studTable.getItems();
             students.add(student);
             studTable.setItems(students);
         }
-
-        studTable.getItems().removeAll(students);
     }
 
     public class Student
