@@ -224,15 +224,28 @@ class ClientThread extends Thread {
                 String request = in.readLine();
 
                 // Send the response to the oputput stream: server → client
-                if (request != null)
-                    System.out.println(request);
-
                 if (request != null) {
-                    if (request.equals("removeAllStudents")) deleteDBStuds();
+                    if (request.equals("removeAllStudents"))
+                    {
+                        out.println("like");
+                        out.flush();
+                        deleteDBStuds();
+                    }
 
-                    if (request.equals("addStudents")) loadDB();
+                    if (request.equals("addStudents"))
+                    {
+                        out.println("like");
+                        out.flush();
+                        loadDB();
+                    }
 
-                    if (request.equals("distributeStudents")) distribution();
+                    if (request.equals("distributeStudents"))
+                    {
+                        out.println("like");
+                        out.flush();
+                        distribution();
+                    }
+
 
                     String[] message = request.split(",");
 
@@ -244,14 +257,20 @@ class ClientThread extends Thread {
                         newStudent.setSex(message[3]);
                         newStudent.setNationalitate(message[4]);
                         newStudent.setMedie(Float.valueOf(message[5]));
+                        newStudent.setCameraPref(Integer.parseInt((message[6])));
                         studentRepository.save(newStudent);
                         transaction.commit();
+                        System.out.println(newStudent);
+                        out.println("like");
+                        out.flush();
                     }
 
                     if (message[0].equals("removeStudent")) {
                         transaction.begin();
                         studentRepository.deleteById(Integer.parseInt(message[1]));
                         transaction.commit();
+                        out.println("like");
+                        out.flush();
                     }
 
                     if (message[0].equals("addCamin")) {
@@ -260,6 +279,8 @@ class ClientThread extends Thread {
                         newCamin.setNume(message[1]);
                         caminRepository.save(newCamin);
                         transaction.commit();
+                        out.println("like");
+                        out.flush();
                     }
 
                     if (message[0].equals("addCamera")) {
@@ -270,6 +291,8 @@ class ClientThread extends Thread {
                         newCamera.setIdCamin(newCamera.getReferencedCamin().getId());
                         cameraRepository.save(newCamera);
                         transaction.commit();
+                        out.println("like");
+                        out.flush();
                     }
 
                     if (request.equals("getStudents"))
@@ -286,7 +309,6 @@ class ClientThread extends Thread {
                         System.out.println("test");
                         out.flush();
                     }
-
                 }
             }
         } catch (IOException e) {

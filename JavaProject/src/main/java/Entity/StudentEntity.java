@@ -143,12 +143,12 @@ public class StudentEntity {
 
     @Override
     public String toString() {
-        return  idCamera +
-                "," + nume +
+        return   nume +
                 "," + prenume  +
                 "," + sex +
-                "," + nationalitate +
                 "," + medie +
-                "," + cameraPref;
+                "," + idCamera +
+                "," + cameraPref+
+                "," + nationalitate;
     }
 }
