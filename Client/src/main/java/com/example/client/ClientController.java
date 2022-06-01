@@ -112,6 +112,7 @@ public class ClientController implements Initializable {
         ObservableList<Student> students;
 
         studTable.getItems().removeAll();
+        studTable.refresh();
 
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
