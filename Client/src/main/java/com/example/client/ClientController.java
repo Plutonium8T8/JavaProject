@@ -134,6 +134,8 @@ public class ClientController implements Initializable {
             students.add(student);
             studTable.setItems(students);
         }
+
+        studTable.getItems().removeAll();
     }
 
     public class Student
