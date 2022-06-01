@@ -109,7 +109,9 @@ public class ClientController implements Initializable {
     }
 
     public void showStudents() throws IOException {
-        ObservableList<Student> students = null;
+        ObservableList<Student> students;
+
+        studTable.getItems().removeAll();
 
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
