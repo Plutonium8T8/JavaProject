@@ -298,7 +298,7 @@ class ClientThread extends Thread {
                     if (request.equals("showStudents"))
                     {
                          List <StudentEntity>  students = studentRepository.findAll();
-                         String mesaj = null;
+                         String mesaj = "";
                          for (StudentEntity str : students){
                              mesaj = mesaj + str.toString() + ";";
                          }
