@@ -109,9 +109,7 @@ public class ClientController implements Initializable {
     }
 
     public void showStudents() throws IOException {
-        ObservableList<Student> students;
-
-        studTable.getItems().removeAll();
+        ObservableList<Student> students = null;
 
         System.out.println(studTable.getItems());
 
@@ -135,6 +133,8 @@ public class ClientController implements Initializable {
             students.add(student);
             studTable.setItems(students);
         }
+
+        studTable.getItems().removeAll(students);
     }
 
     public class Student
