@@ -63,6 +63,8 @@ public class ClientController implements Initializable {
     private TableView<Student> studTable;
 
     @FXML
+    private TableColumn<Student, String> idCol;
+    @FXML
     private TableColumn<Student, String> numeCol;
 
     @FXML
@@ -91,6 +93,7 @@ public class ClientController implements Initializable {
     }
 
     public void showStudent() throws IOException {
+        idCol.setCellValueFactory(new PropertyValueFactory<Student, String>("idStudent"));
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
         medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
@@ -102,19 +105,19 @@ public class ClientController implements Initializable {
         List<String> mesaj;
         mesaj = List.of(client.sendMessage("showStudent," + idGetter.getText()).split(","));
 
-        Student student = new Student(mesaj.get(0),mesaj.get(1),mesaj.get(2),mesaj.get(3),mesaj.get(4),mesaj.get(5),mesaj.get(6));
+        Student student = new Student(mesaj.get(0),mesaj.get(1),mesaj.get(2),mesaj.get(3),mesaj.get(4),mesaj.get(5),mesaj.get(6),mesaj.get(7));
         ObservableList<Student> students = studTable.getItems();
         students.add(student);
         studTable.setItems(students);
     }
 
     public void showStudents() throws IOException {
-        ObservableList<Student> students = null;
+        ObservableList<Student> students;
 
-        studTable.getItems().removeAll(students);
+        studTable.getItems().clear();
+        studTable.refresh();
 
-        System.out.println(studTable.getItems());
-
+        idCol.setCellValueFactory(new PropertyValueFactory<Student, String>("idStudent"));
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
         medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
@@ -128,7 +131,7 @@ public class ClientController implements Initializable {
 
         for (String indexString : mesaj) {
             List<String> splitIndexString = List.of(indexString.split(","));
-            Student student = new Student(splitIndexString.get(0), splitIndexString.get(1), splitIndexString.get(2), splitIndexString.get(3), splitIndexString.get(4), splitIndexString.get(5), splitIndexString.get(6));
+            Student student = new Student(splitIndexString.get(0), splitIndexString.get(1), splitIndexString.get(2), splitIndexString.get(3), splitIndexString.get(4), splitIndexString.get(5), splitIndexString.get(6), splitIndexString.get(7));
 
             students = studTable.getItems();
             students.add(student);
@@ -172,6 +175,16 @@ public class ClientController implements Initializable {
         String cameraPrefStudent;
         String nationalitate;
 
+        public String getIdStudent() {
+            return idStudent;
+        }
+
+        public void setIdStudent(String idStudent) {
+            this.idStudent = idStudent;
+        }
+
+        String idStudent;
+
         public void setNumeStudent(String numeStudent) {
             this.numeStudent = numeStudent;
         }
@@ -198,8 +211,9 @@ public class ClientController implements Initializable {
             this.nationalitate = nationalitate;
         }
 
-        Student(String numeStudent, String prenumeStudent, String sexStudent, String medieStudent, String idCaminStudent, String cameraPrefStudent, String nationalitate)
+        Student(String idStudent, String numeStudent, String prenumeStudent, String sexStudent, String medieStudent, String idCaminStudent, String cameraPrefStudent, String nationalitate)
         {
+            this.idStudent = idStudent;
             this.numeStudent = numeStudent;
             this.prenumeStudent = prenumeStudent;
             this.cameraPrefStudent = cameraPrefStudent;
@@ -226,7 +240,7 @@ public class ClientController implements Initializable {
     }
 
     public void addStudent() throws IOException {
-        String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
+        String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText() + "," + idCaminRef.getText();
         client.sendMessage(message);
     }
 

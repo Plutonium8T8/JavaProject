@@ -143,7 +143,7 @@ public class StudentEntity {
 
     @Override
     public String toString() {
-        return   nume +
+        return  nume +
                 "," + prenume  +
                 "," + sex +
                 "," + medie +

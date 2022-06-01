@@ -25,7 +25,7 @@
       <Text fx:id="sextxt" layoutX="561.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24;" text="Sex" textAlignment="CENTER" wrappingWidth="159.0" />
       <Button fx:id="add1" layoutX="528.0" layoutY="566.0" mnemonicParsing="false" onAction="#switchScene2" prefHeight="35.0" prefWidth="223.0" text="Back" />
       <ChoiceBox fx:id="sex" layoutX="528.0" layoutY="367.0" prefHeight="35.0" prefWidth="223.0" />
-      <TextField fx:id="preferinta" layoutX="529.0" layoutY="437.0" prefHeight="35.0" prefWidth="223.0">
+      <TextField fx:id="idCaminRef" layoutX="529.0" layoutY="437.0" prefHeight="35.0" prefWidth="223.0">
          <font>
             <Font name="Arial" size="12.0" />
          </font>

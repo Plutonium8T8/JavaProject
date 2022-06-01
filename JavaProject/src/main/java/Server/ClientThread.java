@@ -114,14 +114,11 @@ class ClientThread extends Thread {
                 .collect(Collectors.toList());
 
         for (CameraEntity str : sortedcamera ){
-            if(!sortedfemales.equals(Collections.emptyList()) && !sortedmales.equals(Collections.emptyList()))
-            {
+            if(!sortedfemales.equals(Collections.emptyList()) && !sortedmales.equals(Collections.emptyList())) {
                 List<Integer> indexMales = new ArrayList<>();
                 int index = 0;
-                while (indexMales.size() < str.getCapacitate() && index < sortedmales.size())
-                {
-                    if(sortedmales.get(index).getCameraPref() == str.getId())
-                    {
+                while (indexMales.size() < str.getCapacitate() && index < sortedmales.size()) {
+                    if (sortedmales.get(index).getCameraPref() == str.getId()) {
                         indexMales.add(index);
                     }
                     index++;
@@ -129,18 +126,27 @@ class ClientThread extends Thread {
 
                 List<Integer> indexFemales = new ArrayList<>();
                 index = 0;
-                while (indexFemales.size() < str.getCapacitate() && index < sortedfemales.size())
-                {
-                    if(sortedfemales.get(index).getCameraPref() == str.getId())
-                    {
+                while (indexFemales.size() < str.getCapacitate() && index < sortedfemales.size()) {
+                    if (sortedfemales.get(index).getCameraPref() == str.getId()) {
                         indexFemales.add(index);
                     }
                     index++;
                 }
 
-                if (sortedmales.get(indexMales.get(0)).getMedie() > sortedfemales.get(indexFemales.get(0)).getMedie()) {
-                    for (int indexFor : indexMales)
-                    {
+                int turn = 2;
+
+                if (indexMales.size() == 0) {
+                    turn = 2;
+                } else if (indexFemales.size() == 0) {
+                    turn = 1;
+                } else if (sortedmales.get(indexMales.get(0)).getMedie() > sortedfemales.get(indexFemales.get(0)).getMedie()) {
+                    turn = 1;
+                } else {
+                    turn = 2;
+                }
+
+                if (turn == 1) {
+                    for (int indexFor : indexMales) {
                         transaction.begin();
                         StudentEntity student;
                         student = studentRepository.findById(sortedmales.get(indexFor).getId());
@@ -154,10 +160,34 @@ class ClientThread extends Thread {
 
                         sortedmales.get(indexFor).setMedie(null);
                     }
+                    if (str.getCapacitate() > indexMales.size()) {
+                        for (StudentEntity stdM : sortedmales) {
+                            if (str.getCapacitate() > indexMales.size()) {
+                                transaction.begin();
+                                StudentEntity student;
+                                try {
+                                    student = studentRepository.findById(stdM.getId());
+                                    student.setReferencedCamera(str);
+                                    student.setIdCamera(student.getReferencedCamera().getId());
+                                    studentRepository.deleteById(stdM.getId());
+                                    transaction.commit();
+                                    transaction.begin();
+                                    studentRepository.save(student);
+                                    transaction.commit();
+                                    indexMales.add(stdM.getId());
+                                } catch (Exception e) {
+                                    transaction.commit();
+                                    continue;
+                                }
+
+                                stdM.setMedie(null);
+                            }
+                        }
+                    }
                 }
-                else {
-                    for (int indexFor : indexFemales)
-                    {
+
+                if (turn == 2) {
+                    for (int indexFor : indexFemales) {
                         transaction.begin();
                         StudentEntity student;
                         student = studentRepository.findById(sortedfemales.get(indexFor).getId());
@@ -170,6 +200,30 @@ class ClientThread extends Thread {
                         transaction.commit();
 
                         sortedfemales.get(indexFor).setMedie(null);
+                    }
+                    if (str.getCapacitate() > indexFemales.size()) {
+                        for (StudentEntity stdF : sortedfemales) {
+                            if (str.getCapacitate() > indexFemales.size()) {
+                                transaction.begin();
+                                StudentEntity student;
+                                try {
+                                    student = studentRepository.findById(stdF.getId());
+                                    student.setReferencedCamera(str);
+                                    student.setIdCamera(student.getReferencedCamera().getId());
+                                    studentRepository.deleteById(stdF.getId());
+                                    transaction.commit();
+                                    transaction.begin();
+                                    studentRepository.save(student);
+                                    transaction.commit();
+                                    indexFemales.add(stdF.getId());
+                                } catch (Exception e) {
+                                    transaction.commit();
+                                    continue;
+                                }
+
+                                stdF.setMedie(null);
+                            }
+                        }
                     }
                 }
             }
@@ -300,7 +354,7 @@ class ClientThread extends Thread {
                          List <StudentEntity>  students = studentRepository.findAll();
                          String mesaj = "";
                          for (StudentEntity str : students){
-                             mesaj = mesaj + str.toString() + ";";
+                             mesaj = mesaj + str.getId() + "," + str.toString() + ";";
                          }
                          out.println(mesaj);
                          out.flush();
@@ -308,8 +362,8 @@ class ClientThread extends Thread {
 
                     if (message[0].equals("showStudent"))
                     {
-                        StudentEntity student =studentRepository.findById(Integer.parseInt(message[1]));
-                        String mesaj = student.toString();
+                        StudentEntity student = studentRepository.findById(Integer.parseInt(message[1]));
+                        String mesaj = message[1] + "," + student.toString();
                         out.println( mesaj);
                         out.flush();
                     }
