@@ -89,8 +89,7 @@ public class ClientController implements Initializable {
         sex.getItems().addAll(sexChoice);
     }
 
-    public void addTable()
-    {
+    public void addTable() throws IOException {
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
         medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
@@ -99,9 +98,8 @@ public class ClientController implements Initializable {
         prefCol.setCellValueFactory(new PropertyValueFactory<Student, String>("CameraPrefStudent"));
         natCol.setCellValueFactory(new PropertyValueFactory<Student, String>("Nationalitate"));
 
-        client.sendMessage( "showStudent," + idGetter.getText());
         List<String> mesaj = new ArrayList<>();
-        mesaj = List.of(client.recieveMessage().split(","));
+        mesaj = List.of(client.sendMessage("showStudent," + idGetter.getText()).split(","));
 
         Student student = new Student(mesaj.get(0),mesaj.get(1),mesaj.get(2),mesaj.get(3),mesaj.get(4),mesaj.get(5),mesaj.get(6));
         ObservableList<Student> students = studTable.getItems();
@@ -186,46 +184,38 @@ public class ClientController implements Initializable {
             this.sexStudent = sexStudent;
         }
     }
-    public void sendMessage(String message)
-    {
+    public void sendMessage(String message) throws IOException {
         client.sendMessage(message);
     }
 
-    public void addStudents()
-    {
+    public void addStudents() throws IOException {
         sendMessage("addStudents");
     }
 
-    public void removeAllStudents()
-    {
+    public void removeAllStudents() throws IOException {
         sendMessage("removeAllStudents");
     }
 
-    public void distributeStudents()
-    {
+    public void distributeStudents() throws IOException {
         sendMessage("distributeStudents");
     }
 
-    public void addStudent()
-    {
+    public void addStudent() throws IOException {
         String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
         client.sendMessage(message);
     }
 
-    public void addCamin()
-    {
+    public void addCamin() throws IOException {
         String message = "addCamin," + numeCamin.getText();
         client.sendMessage(message);
     }
 
-    public void addCamera()
-    {
+    public void addCamera() throws IOException {
         String message = "addCamera," + idCaminRef.getText() + "," + capacitate.getText();
         client.sendMessage(message);
     }
 
-    public void removeById ()
-    {
+    public void removeById () throws IOException {
         String message = "removeStudent," + removeById.getText();
         client.sendMessage(message);
     }
