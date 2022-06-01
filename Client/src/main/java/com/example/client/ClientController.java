@@ -65,6 +65,9 @@ public class ClientController implements Initializable {
     private TableColumn<Student, String> numeCol;
 
     @FXML
+    private TextField preferinta;
+
+    @FXML
     private TableColumn<Student, String> prenumeCol;
 
     @FXML
@@ -201,7 +204,7 @@ public class ClientController implements Initializable {
     }
 
     public void addStudent() throws IOException {
-        String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText();
+        String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText() + "," + preferinta.getText();
         String mesaj = client.sendMessage(message);
     }
 

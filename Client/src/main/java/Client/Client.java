@@ -17,7 +17,10 @@ public class Client {
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             // Send a request to the server
             out.println(message);
+            out.flush();
+            System.out.println(message);
             String returnMessage = in.readLine();
+            System.out.println(returnMessage);
             return returnMessage;
         } catch (IOException e) {
             throw new RuntimeException(e);
