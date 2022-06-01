@@ -3,6 +3,7 @@ package com.example.client;
 import Client.Client;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,6 +109,8 @@ public class ClientController implements Initializable {
     }
 
     public void showStudents() throws IOException {
+        ObservableList<Student> students = null;
+
         numeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("NumeStudent"));
         prenumeCol.setCellValueFactory(new PropertyValueFactory<Student, String>("PrenumeStudent"));
         medieCol.setCellValueFactory(new PropertyValueFactory<Student, String>("MedieStudent"));
@@ -124,7 +127,7 @@ public class ClientController implements Initializable {
             List<String> splitIndexString = List.of(indexString.split(","));
             Student student = new Student(splitIndexString.get(0),splitIndexString.get(1),splitIndexString.get(2),splitIndexString.get(3),splitIndexString.get(4),splitIndexString.get(5),splitIndexString.get(6));
 
-            ObservableList<Student> students = studTable.getItems();
+            students = studTable.getItems();
             students.add(student);
             studTable.setItems(students);
         }
