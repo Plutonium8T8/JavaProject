@@ -219,6 +219,8 @@ class ClientThread extends Thread {
                 // Get the request from the input stream: client → server
                 BufferedReader in = new BufferedReader(
                         new InputStreamReader(socket.getInputStream()));
+
+                PrintWriter out = new PrintWriter(socket.getOutputStream());
                 String request = in.readLine();
 
                 // Send the response to the oputput stream: server → client
@@ -272,15 +274,16 @@ class ClientThread extends Thread {
 
                     if (request.equals("getStudents"))
                     {
-                        PrintWriter out = new PrintWriter(socket.getOutputStream());
                         //out = studentRepository.toString();
                     }
 
                     if (message[0].equals("showStudent"))
                     {
-                        PrintWriter out = new PrintWriter(socket.getOutputStream());
                         StudentEntity student =studentRepository.findById(Integer.parseInt(message[1]));
-                        out.print( student.toString());
+                        System.out.println(student.toString());
+                        String test = student.toString();
+                        out.println( test);
+                        System.out.println("test");
                         out.flush();
                     }
 

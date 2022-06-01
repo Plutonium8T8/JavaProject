@@ -149,7 +149,6 @@ public class StudentEntity {
                 "," + sex +
                 "," + nationalitate +
                 "," + medie +
-                "," + referencedCamera +
                 "," + cameraPref;
     }
 }
