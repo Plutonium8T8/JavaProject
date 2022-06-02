@@ -12,9 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -144,8 +148,21 @@ public class ClientController implements Initializable {
         String idCaminStudent;
         String cameraPrefStudent;
         String nationalitate;
-
         String idStudent;
+
+        @Override
+        public String toString() {
+            return "Student{" +
+                    "numeStudent='" + numeStudent + '\'' +
+                    ", prenumeStudent='" + prenumeStudent + '\'' +
+                    ", sexStudent='" + sexStudent + '\'' +
+                    ", medieStudent='" + medieStudent + '\'' +
+                    ", idCaminStudent='" + idCaminStudent + '\'' +
+                    ", cameraPrefStudent='" + cameraPrefStudent + '\'' +
+                    ", nationalitate='" + nationalitate + '\'' +
+                    ", idStudent='" + idStudent + '\'' +
+                    '}';
+        }
 
         public String getNumeStudent() {
             return numeStudent;
@@ -216,8 +233,22 @@ public class ClientController implements Initializable {
         client.sendMessage("stopServer");
     }
 
-    public void saveToJSON() {
-        System.out.println(students);
+    public void saveToJSON() throws IOException {
+        //ObjectMapper objectMapper = new ObjectMapper();
+
+        /*List <Student> test = new ArrayList<>();
+        for (Student str : students){
+            test.add(str);
+            System.out.println(str);
+        }*/
+        //System.out.println(studTable);
+       /* String arrayToJson = objectMapper.writeValueAsString(test);
+        TypeReference<List<Student>> mapType = new TypeReference<List<Student>>() {};
+        List<Student> jsonToPersonList = objectMapper.readValue(arrayToJson, mapType);
+        objectMapper.writeValue(
+                new File("./studenti.json"),
+                jsonToPersonList);*/
+        //System.out.println(test);
     }
 
     public void addStudents() throws IOException {
@@ -281,7 +312,7 @@ public class ClientController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-        System.out.println(studTable);
+        //System.out.println(studTable);
     }
 
     public void switchScene7(ActionEvent event) throws IOException {

@@ -14,18 +14,22 @@ public class CaminEntity {
     @Column(name = "nume")
     private String nume;
 
+    //returneaza IDul caminului
     public int getId() {
         return id;
     }
 
+    //seteaza IDul caminului
     public void setId(int id) {
         this.id = id;
     }
 
+    //returneaza numele caminului
     public String getNume() {
         return nume;
     }
 
+    //seteaza numele caminului
     public void setNume(String nume) {
         this.nume = nume;
     }

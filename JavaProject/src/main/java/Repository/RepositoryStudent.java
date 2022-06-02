@@ -16,6 +16,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
 
     private final RepositoryCamera localCameraRepository = new RepositoryCamera();
 
+    //returneaza numarul de studenti
     @Override
     public int count() {
         Query countQuery = em.createNativeQuery("SELECT count(*) FROM student");
@@ -23,12 +24,14 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return ((BigInteger) result).intValue();
     }
 
+    //sterge toti studentii
     @Override
     public void deleteAll() {
         Query deleteQuery = em.createNativeQuery("DELETE from student");
         deleteQuery.executeUpdate();
     }
 
+    //sterge un student dupa IDul lui
     @Override
     public void deleteById(int id) {
         Query deleteQuery = em.createNativeQuery("DELETE from student where id = ?1");
@@ -36,6 +39,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         deleteQuery.executeUpdate();
     }
 
+    //returneaza daca exista un student cu IDul respectiv
     @Override
     public boolean existsById(int id) {
         Query existsQuery = em.createNativeQuery("select count(*) FROM student WHERE id = ?1");
@@ -43,6 +47,8 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         Object result = existsQuery.getSingleResult();
         return (Integer) result != 0;
     }
+
+    //returneaza o lista cu toti studentii din baza de date
     @Override
     public List<StudentEntity> findAll() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
@@ -76,6 +82,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return resultList;
     }
 
+    //returneaza o lista cu toti studentii care au sexul feminin din baza de date
     public List<StudentEntity> findAllF() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
         Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = \'female\'");
@@ -108,6 +115,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return resultList;
     }
 
+    //returneaza o lista cu toti studentii care au sexul masculin din baza de date
     public List<StudentEntity> findAllM() {
         ArrayList<StudentEntity> resultList = new ArrayList<>();
         Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = \'male\'");
@@ -140,6 +148,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return resultList;
     }
 
+    //returneaza un student cu IDul respectiv
     @Override
     public StudentEntity findById(int queryId) {
         StudentEntity returnStudentEntity = new StudentEntity();
@@ -197,6 +206,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         return returnStudentEntity;
     }
 
+    //salveaza studentul
     @Override
     public void save(StudentEntity student) {
             em.persist(student);

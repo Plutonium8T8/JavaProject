@@ -45,7 +45,7 @@ public class StudentEntity {
         this.referencedCamera = referencedCamera;
     }
 
-    //returneaza ID-ul studentului
+    //returneaza IDul studentului
     public int getId() {
         return id;
     }
@@ -55,22 +55,22 @@ public class StudentEntity {
         this.id = id;
     }
 
-    //returneaza ID-ul camerei pe care o prefera studentul
+    //returneaza IDul camerei pe care o prefera studentul
     public int getCameraPref() {
         return cameraPref;
     }
 
-    //seteaza ID-ul camerei preferata de student
+    //seteaza IDul camerei preferata de student
     public void setCameraPref(int cameraPref) {
         this.cameraPref = cameraPref;
     }
 
-    //returneaza ID-ul camerei studentului
+    //returneaza IDul camerei studentului
     public int getIdCamera() {
         return idCamera;
     }
 
-    //seteaza ID-ul camerei studentului
+    //seteaza IDul camerei studentului
     public void setIdCamera(Integer idCamera) {
         this.idCamera = idCamera;
     }
@@ -95,12 +95,12 @@ public class StudentEntity {
         this.prenume = prenume;
     }
 
-    //returneaza sex-ul studentului
+    //returneaza sexul studentului
     public String getSex() {
         return sex;
     }
 
-    //seteaza sex-ul studentului
+    //seteaza sexul studentului
     public void setSex(String sex) {
         this.sex = sex;
     }

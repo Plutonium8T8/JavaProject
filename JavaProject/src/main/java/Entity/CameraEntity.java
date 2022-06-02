@@ -22,34 +22,42 @@ public class CameraEntity {
     @Column(name = "capacitate")
     private int capacitate;
 
+    //returneaza referinta caminului de unde face parte camera
     public CaminEntity getReferencedCamin() {
         return referencedCamin;
     }
 
+    //seteaza referinta caminului de unde face parte camera
     public void setReferencedCamin(CaminEntity referencedCamin) {
         this.referencedCamin = referencedCamin;
     }
 
+    //returneaza IDul camerei
     public int getId() {
         return id;
     }
 
+    //seteaza IDul camerei
     public void setId(int id) {
         this.id = id;
     }
 
+    //returneaza IDul caminului de unde face parte camera
     public int getIdCamin() {
         return idCamin;
     }
 
+    //seteaza IDul caminului de unde face parte camera
     public void setIdCamin(int idCamin) {
         this.idCamin = idCamin;
     }
 
+    //returneaza capacitatea camerei
     public int getCapacitate() {
         return capacitate;
     }
 
+    //seteaza capacitatea camerei
     public void setCapacitate(int capacitate) {
         this.capacitate = capacitate;
     }

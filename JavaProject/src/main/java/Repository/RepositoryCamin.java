@@ -16,6 +16,7 @@ import java.lang.Integer;
 public class RepositoryCamin implements Repository<CaminEntity> {
     private final EntityManager em = DBAccess.getInstance();
 
+    //returneaza numarul de camine din baza de date
     @Override
     public int count() {
         Query countQuery = em.createNativeQuery("SELECT count(*) FROM camin");
@@ -23,12 +24,14 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         return ((BigInteger) result).intValue();
     }
 
+    //sterge toate caminele din baza de date
     @Override
     public void deleteAll() {
         Query deleteQuery = em.createNativeQuery("DELETE from camin");
         deleteQuery.executeUpdate();
     }
 
+    //sterge caminul cu IDul respectiv din baza de date
     @Override
     public void deleteById(int id) {
         Query deleteQuery = em.createNativeQuery("DELETE from camin where id = ?1");
@@ -36,6 +39,7 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         deleteQuery.executeUpdate();
     }
 
+    //verifica daca caminul cu IDul respectiv exista in baza de date
     @Override
     public boolean existsById(int id) {
         Query existsQuery = em.createNativeQuery("select count(*) FROM camin WHERE id = ?1");
@@ -44,6 +48,7 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         return ((BigInteger) result).intValue() != 0;
     }
 
+    //returneaza o lista cu toate caminele din baza de date
     @Override
     public Iterable<CaminEntity> findAll() {
         ArrayList<CaminEntity> resultList = new ArrayList<>();
@@ -63,6 +68,7 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         return resultList;
     }
 
+    //returneaza caminul cu IDul respectiv
     @Override
     public CaminEntity findById(int queryId) {
         Query findQuery = em.createNativeQuery("select id FROM camin WHERE id = ?1");
@@ -82,11 +88,13 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         return returnCaminEntityEntity;
     }
 
+    //salveaza caminul
     @Override
     public void save(CaminEntity camin) {
         em.persist(camin);
     }
 
+    //returneaza caminul cu numele respectiv
     public CameraEntity findByname(String name) {
         Query existsQuery = em.createNativeQuery("select id FROM camin WHERE name = ?1");
         existsQuery.setParameter(1,name);
@@ -105,6 +113,7 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         return returnCameraEntity;
     }
 
+    //verifica daca exista caminul cu numele respectiv in baza de date
     public boolean existsByName(String name) {
         Query existsQuery = em.createNativeQuery("select count(*) FROM camin WHERE name = ?1");
         existsQuery.setParameter(1,name);

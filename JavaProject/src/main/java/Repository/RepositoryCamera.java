@@ -16,6 +16,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
 
     private final RepositoryCamin localCaminRepository = new RepositoryCamin();
 
+    //returneaza numarul de camere din baza de date
     @Override
     public int count() {
         Query countQuery = em.createNativeQuery("SELECT count(*) FROM Camera");
@@ -23,12 +24,14 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         return ((BigInteger) result).intValue();
     }
 
+    //sterge toate camerele din baza de date
     @Override
     public void deleteAll() {
         Query deleteQuery = em.createNativeQuery("DELETE from Camera");
         deleteQuery.executeUpdate();
     }
 
+    //sterge camera dupa IDul respectiv
     @Override
     public void deleteById(int id) {
         Query deleteQuery = em.createNativeQuery("DELETE from Camera where id = ?1");
@@ -36,6 +39,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         deleteQuery.executeUpdate();
     }
 
+    //verifica daca exista camera cu IDul respectiv in baza de date
     @Override
     public boolean existsById(int id) {
         Query existsQuery = em.createNativeQuery("select count(*) FROM Camera WHERE id = ?1");
@@ -44,6 +48,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         return ((BigInteger) result).intValue() != 0;
     }
 
+    //returneaza o lista cu toate camerele din baza de date
     @Override
     public List<CameraEntity> findAll() {
         ArrayList<CameraEntity> resultList = new ArrayList<>();
@@ -66,6 +71,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         return resultList;
     }
 
+    //returneaza camera cu IDul respectiv din baza de date
     @Override
     public CameraEntity findById(int queryId) {
         Query existsQuery = em.createNativeQuery("select id FROM camera WHERE id = ?1");
@@ -93,6 +99,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         return returnCameraEntity;
     }
 
+    //salveaza camera
     @Override
     public void save(CameraEntity camera) {
             em.persist(camera);

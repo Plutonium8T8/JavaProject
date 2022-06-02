@@ -376,7 +376,9 @@ class ClientThread extends Thread {
                          out.println(mesaj);
                          out.flush();
                     }
-                    
+
+                    //serverul primeste de la client comanda showStudent impreuna cu idul studentului
+                    //serverul trimite clientului informatii despre studentul respectiv
                     if (message[0].equals("showStudent"))
                     {
                         StudentEntity student = studentRepository.findById(Integer.parseInt(message[1]));
@@ -385,6 +387,8 @@ class ClientThread extends Thread {
                         out.flush();
                     }
 
+                    //serverul primeste de la client comanda stopServer
+                    //serverul se opreste
                     if (message[0].equals("stopServer"))
                     {
                         out.println("serverStopped");
@@ -397,7 +401,7 @@ class ClientThread extends Thread {
             System.err.println("Communication error... " + e);
         } finally {
             try {
-                socket.close(); // or use try-with-resources
+                socket.close();
             } catch (IOException e) {
                 System.err.println (e);
             }
