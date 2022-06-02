@@ -1,9 +1,7 @@
 package com.example.client;
 
 import Client.Client;
-import javafx.beans.Observable;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,16 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,7 +23,7 @@ public class ClientController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private Client client = new Client();
+    private final Client client = new Client();
     @FXML
     private ChoiceBox<String> sex = new ChoiceBox<>();
 
@@ -84,7 +78,9 @@ public class ClientController implements Initializable {
 
     @FXML
     private TableColumn<Student, String> natCol;
-    private String[] sexChoice = {"male", "female"};
+    private final String[] sexChoice = {"male", "female"};
+
+    private ObservableList<Student> students;
 
     @Override
     public void initialize (URL arg0, ResourceBundle arg1)
@@ -106,7 +102,7 @@ public class ClientController implements Initializable {
         mesaj = List.of(client.sendMessage("showStudent," + idGetter.getText()).split(","));
 
         Student student = new Student(mesaj.get(0),mesaj.get(1),mesaj.get(2),mesaj.get(3),mesaj.get(4),mesaj.get(5),mesaj.get(6),mesaj.get(7));
-        ObservableList<Student> students = studTable.getItems();
+        students = studTable.getItems();
         students.add(student);
         studTable.setItems(students);
     }
@@ -139,8 +135,18 @@ public class ClientController implements Initializable {
         }
     }
 
-    public class Student
+    public static class Student
     {
+        String numeStudent;
+        String prenumeStudent;
+        String sexStudent;
+        String medieStudent;
+        String idCaminStudent;
+        String cameraPrefStudent;
+        String nationalitate;
+
+        String idStudent;
+
         public String getNumeStudent() {
             return numeStudent;
         }
@@ -166,47 +172,26 @@ public class ClientController implements Initializable {
         public String getNationalitate() {
             return nationalitate;
         }
-
-        String numeStudent;
-        String prenumeStudent;
-        String sexStudent;
-        String medieStudent;
-        String idCaminStudent;
-        String cameraPrefStudent;
-        String nationalitate;
-
         public String getIdStudent() {
             return idStudent;
         }
-
         public void setIdStudent(String idStudent) {
             this.idStudent = idStudent;
         }
-
-        String idStudent;
-
         public void setNumeStudent(String numeStudent) {
             this.numeStudent = numeStudent;
         }
-
         public void setPrenumeStudent(String prenumeStudent) {
             this.prenumeStudent = prenumeStudent;
         }
-
-        public void setSexStudent(String sexStudent) {
-            this.sexStudent = sexStudent;
-        }
-
+        public void setSexStudent(String sexStudent) { this.sexStudent = sexStudent;}
         public void setMedieStudent(String medieStudent) {this.medieStudent = medieStudent;}
-
         public void setIdCaminStudent(String idCaminStudent) {
             this.idCaminStudent = idCaminStudent;
         }
-
         public void setCameraPrefStudent(String cameraPrefStudent) {
             this.cameraPrefStudent = cameraPrefStudent;
         }
-
         public void setNationalitate(String nationalitate) {
             this.nationalitate = nationalitate;
         }
@@ -225,6 +210,14 @@ public class ClientController implements Initializable {
     }
     public void sendMessage(String message) throws IOException {
         client.sendMessage(message);
+    }
+
+    public void stopServer() throws IOException {
+        client.sendMessage("stopServer");
+    }
+
+    public void saveToJSON() {
+        System.out.println(students);
     }
 
     public void addStudents() throws IOException {

@@ -24,5 +24,6 @@
       </TableView>
       <Button fx:id="back" layoutX="14.0" layoutY="666.0" mnemonicParsing="false" onAction="#switchScene1" prefHeight="40.0" prefWidth="246.0" text="Back" />
       <Button fx:id="view" layoutX="1016.0" layoutY="666.0" mnemonicParsing="false" onAction="#showStudents" prefHeight="40.0" prefWidth="246.0" text="View" />
+      <Button fx:id="back1" layoutX="515.0" layoutY="666.0" mnemonicParsing="false" onAction="#saveToJSON" prefHeight="40.0" prefWidth="246.0" text="Save to JSON" />
    </children>
 </Pane>
