@@ -12,8 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.scene.control.*;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.File;
 import java.io.IOException;
@@ -225,10 +223,12 @@ public class ClientController implements Initializable {
             this.sexStudent = sexStudent;
         }
     }
+    //salveaza mesajul
     public void sendMessage(String message) throws IOException {
         client.sendMessage(message);
     }
 
+    //trimite comanda stopServer catre server
     public void stopServer() throws IOException {
         client.sendMessage("stopServer");
     }
@@ -250,38 +250,45 @@ public class ClientController implements Initializable {
                 jsonToPersonList);*/
         //System.out.println(test);
     }
-
+    //trimite comanda addStudents catre server
     public void addStudents() throws IOException {
         sendMessage("addStudents");
     }
 
+    //trimite comanda removeAllStudents catre server
     public void removeAllStudents() throws IOException {
         sendMessage("removeAllStudents");
     }
 
+    //trimite comanda distributeStudents catre server
     public void distributeStudents() throws IOException {
         sendMessage("distributeStudents");
     }
 
+    //trimite comanda addStudent catre server impreuna cu informatiile legate de student
     public void addStudent() throws IOException {
         String message = "addStudent," + nume.getText() + "," + prenume.getText() + "," + sex.getValue() + "," + nationalitate.getText() + "," + medie.getText() + "," + idCaminRef.getText();
         client.sendMessage(message);
     }
 
+    //trimite comanda addCamin catre server impreuna cu informatiile despre camin
     public void addCamin() throws IOException {
         String message = "addCamin," + numeCamin.getText();
         client.sendMessage(message);
     }
 
+    //trimite comanda addCamera catre server impreuna cu informatiile legate de camera
     public void addCamera() throws IOException {
         String message = "addCamera," + idCaminRef.getText() + "," + capacitate.getText();
         client.sendMessage(message);
     }
 
+    //trimite comanda removeById catre server impreuna cu IDul studentului
     public void removeById () throws IOException {
         String message = "removeStudent," + removeById.getText();
         client.sendMessage(message);
     }
+    //schimbare la scena1
     public void switchScene1(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene1.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -289,7 +296,7 @@ public class ClientController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
+    //schimbare la scena2
     public void switchScene2(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene2.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -298,6 +305,7 @@ public class ClientController implements Initializable {
         stage.show();
     }
 
+    //schimbare la scena4
     public void switchScene4(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene4.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -306,6 +314,7 @@ public class ClientController implements Initializable {
         stage.show();
     }
 
+    //schimbare la scena6
     public void switchScene6(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene6.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -315,6 +324,7 @@ public class ClientController implements Initializable {
         //System.out.println(studTable);
     }
 
+    //schimbare la scena7
     public void switchScene7(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene7.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -323,6 +333,7 @@ public class ClientController implements Initializable {
         stage.show();
     }
 
+    //schimbare la scena9
     public void switchScene9(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene9.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -331,6 +342,7 @@ public class ClientController implements Initializable {
         stage.show();
     }
 
+    //schimbare la scena10
     public void switchScene10(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene10.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -339,6 +351,7 @@ public class ClientController implements Initializable {
         stage.show();
     }
 
+    //schimbare la scena11
     public void switchScene11(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("scene11.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
