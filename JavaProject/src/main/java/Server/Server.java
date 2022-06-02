@@ -8,8 +8,6 @@ import java.sql.SQLException;
 public class Server {
     public static final int PORT = 8100;
 
-    public static Boolean stop=false;
-
     public Server() throws IOException {
         ServerSocket serverSocket = null;
         try {
@@ -19,7 +17,6 @@ public class Server {
                 System.out.println ("Waiting for a client ...");
                 Socket socket = serverSocket.accept();
                 new ClientThread(socket).start();
-
             }
         } catch (IOException e) {
             System.err. println ("Ooops... " + e);

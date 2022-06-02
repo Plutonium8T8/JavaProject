@@ -1,8 +1,6 @@
 package Repository;
 
 import DataBaseAccess.DBAccess;
-import Entity.CameraEntity;
-import Entity.CaminEntity;
 import Entity.StudentEntity;
 
 import javax.persistence.EntityManager;
@@ -14,9 +12,9 @@ import java.util.List;
 
 public class RepositoryStudent implements Repository<StudentEntity>{
 
-    private EntityManager em = DBAccess.getInstance();
+    private final EntityManager em = DBAccess.getInstance();
 
-    private RepositoryCamera localCameraRepository = new RepositoryCamera();
+    private final RepositoryCamera localCameraRepository = new RepositoryCamera();
 
     @Override
     public int count() {
@@ -43,10 +41,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         Query existsQuery = em.createNativeQuery("select count(*) FROM student WHERE id = ?1");
         existsQuery.setParameter(1,id);
         Object result = existsQuery.getSingleResult();
-        if ( ((Integer) result).intValue() == 0){
-            return false;
-        }
-        return true;
+        return (Integer) result != 0;
     }
     @Override
     public List<StudentEntity> findAll() {
@@ -54,11 +49,10 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         Query findQuery = em.createNativeQuery("SELECT * FROM student");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
-        Iterator itr = result.iterator();
 
-        while (itr.hasNext()) {
+        for (Object o : result) {
             StudentEntity student = new StudentEntity();
-            Object[] obj = (Object[]) itr.next();
+            Object[] obj = (Object[]) o;
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
             if (obj[1] != null) {
                 student.setReferencedCamera(localCameraRepository.findById(Integer.parseInt(String.valueOf(obj[1]))));
@@ -87,11 +81,10 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = \'female\'");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
-        Iterator itr = result.iterator();
 
-        while (itr.hasNext()) {
+        for (Object o : result) {
             StudentEntity student = new StudentEntity();
-            Object[] obj = (Object[]) itr.next();
+            Object[] obj = (Object[]) o;
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
             if (obj[1] != null) {
                 student.setReferencedCamera(localCameraRepository.findById(Integer.parseInt(String.valueOf(obj[1]))));
@@ -120,11 +113,10 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         Query findQuery = em.createNativeQuery("SELECT * FROM student where sex = \'male\'");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
-        Iterator itr = result.iterator();
 
-        while (itr.hasNext()) {
+        for (Object o : result) {
             StudentEntity student = new StudentEntity();
-            Object[] obj = (Object[]) itr.next();
+            Object[] obj = (Object[]) o;
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
             if (obj[1] != null) {
                 student.setReferencedCamera(localCameraRepository.findById(Integer.parseInt(String.valueOf(obj[1]))));
@@ -151,7 +143,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
     @Override
     public StudentEntity findById(int queryId) {
         StudentEntity returnStudentEntity = new StudentEntity();
-        Integer idCamera=null;
+        Integer idCamera;
         Query existsQuery;
         Object result;
 
@@ -187,7 +179,7 @@ public class RepositoryStudent implements Repository<StudentEntity>{
         existsQuery = em.createNativeQuery("select medie FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-        Float medie = ((Float) result).floatValue();
+        Float medie = (Float) result;
 
         existsQuery = em.createNativeQuery("select camera_pref FROM student WHERE id = ?1");
         existsQuery.setParameter(1, queryId);

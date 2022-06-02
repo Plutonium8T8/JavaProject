@@ -3,13 +3,10 @@ package DataBaseAccess;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import Entity.CameraEntity;
-import Entity.CaminEntity;
-import Entity.StudentEntity;
 
 public class DBAccess {
-    private static EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
-    private static EntityManager entityManager = entityManagerFactory.createEntityManager();
+    private static final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("default");
+    private static final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
     public static EntityManager getInstance(){
         return entityManager;

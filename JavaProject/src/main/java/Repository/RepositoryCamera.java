@@ -2,7 +2,6 @@ package Repository;
 
 import DataBaseAccess.DBAccess;
 import Entity.CameraEntity;
-import Entity.CaminEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -13,9 +12,9 @@ import java.util.List;
 
 public class RepositoryCamera implements Repository<CameraEntity> {
 
-    private EntityManager em = DBAccess.getInstance();
+    private final EntityManager em = DBAccess.getInstance();
 
-    private RepositoryCamin localCaminRepository = new RepositoryCamin();
+    private final RepositoryCamin localCaminRepository = new RepositoryCamin();
 
     @Override
     public int count() {
@@ -42,10 +41,7 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         Query existsQuery = em.createNativeQuery("select count(*) FROM Camera WHERE id = ?1");
         existsQuery.setParameter(1, id);
         Object result = existsQuery.getSingleResult();
-        if (((BigInteger) result).intValue() == 0) {
-            return false;
-        }
-        return true;
+        return ((BigInteger) result).intValue() != 0;
     }
 
     @Override
@@ -54,11 +50,10 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         Query findQuery = em.createNativeQuery("SELECT * FROM camera");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
-        Iterator itr = result.iterator();
 
-        while (itr.hasNext()) {
+        for (Object o : result) {
             CameraEntity camera = new CameraEntity();
-            Object[] obj = (Object[]) itr.next();
+            Object[] obj = (Object[]) o;
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
             Integer idCamin = Integer.parseInt(String.valueOf(obj[1]));
             Integer capacitate = Integer.parseInt(String.valueOf(obj[2]));
@@ -78,12 +73,10 @@ public class RepositoryCamera implements Repository<CameraEntity> {
         Object result = existsQuery.getSingleResult();
         Integer id = ((Number) result).intValue();
 
-        Integer idCamin=null;
+        Integer idCamin;
         existsQuery = em.createNativeQuery("select id_camin FROM camera WHERE id = ?1");
         existsQuery.setParameter(1, queryId);
         result = existsQuery.getSingleResult();
-        if (result == null)
-            idCamin =null;
         idCamin = ((Number) result).intValue();
 
         existsQuery = em.createNativeQuery("select capacitate FROM camera WHERE id = ?1");

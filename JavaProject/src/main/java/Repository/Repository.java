@@ -1,7 +1,5 @@
 package Repository;
 
-import java.util.Optional;
-
 public interface Repository<T> {
 
     int count();

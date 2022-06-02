@@ -2,7 +2,6 @@ package Repository;
 
 import Entity.CaminEntity;
 import Entity.CameraEntity;
-import Entity.StudentEntity;
 import DataBaseAccess.DBAccess;
 
 import javax.persistence.EntityManager;
@@ -12,11 +11,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.lang.Integer;
-import java.util.Optional;
 
 
 public class RepositoryCamin implements Repository<CaminEntity> {
-    private EntityManager em = DBAccess.getInstance();
+    private final EntityManager em = DBAccess.getInstance();
 
     @Override
     public int count() {
@@ -52,11 +50,10 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         Query findQuery = em.createNativeQuery("SELECT * FROM camin");
 
         List<Object> result = (List<Object>) findQuery.getResultList();
-        Iterator itr = result.iterator();
 
-        while(itr.hasNext()){
+        for (Object o : result) {
             CaminEntity camin = new CaminEntity();
-            Object[] obj = (Object[]) itr.next();
+            Object[] obj = (Object[]) o;
             Integer id = Integer.parseInt(String.valueOf(obj[0]));
             String numeCamin = String.valueOf(obj[1]);
             camin.setId(id);
@@ -112,9 +109,6 @@ public class RepositoryCamin implements Repository<CaminEntity> {
         Query existsQuery = em.createNativeQuery("select count(*) FROM camin WHERE name = ?1");
         existsQuery.setParameter(1,name);
         Object result = existsQuery.getSingleResult();
-        if ( ((BigInteger) result).intValue() == 0){
-            return false;
-        }
-        return true;
+        return ((BigInteger) result).intValue() != 0;
     }
 }

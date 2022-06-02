@@ -39,7 +39,6 @@ public class CaminEntity {
 
         if (id != that.id) return false;
         if (nume != null ? !nume.equals(that.nume) : that.nume != null) return false;
-
         return true;
     }
 

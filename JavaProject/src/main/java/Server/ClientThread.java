@@ -24,14 +24,19 @@ class ClientThread extends Thread {
 
     EntityTransaction transaction = entityManager.getTransaction();
 
+    //repository cu entitati de tip student
     RepositoryStudent studentRepository = new RepositoryStudent();
 
+    //repository cu entitati de tip camera
     RepositoryCamera cameraRepository = new RepositoryCamera();
 
+    //repository cu entitati de tip camin
     RepositoryCamin caminRepository = new RepositoryCamin();
 
+    //socket-ul thread-ului
     public ClientThread (Socket socket) { this.socket = socket ; }
 
+    //sterge toti studentii din baza de date
     private void deleteDBStuds(){
         try {
             transaction.begin();
@@ -46,9 +51,11 @@ class ClientThread extends Thread {
         }
         System.out.println("Delete done!");
     }
+
+    //citeste din fisier csv studenti si ii adauga in baza de date
     private void loadDB(){
         try {
-            CSVReader reader = null;
+            CSVReader reader;
             reader = new CSVReader(new FileReader("src/main/java/studenti.csv"));
             String[] nextline;
             while ((nextline = reader.readNext()) != null) {
@@ -89,6 +96,7 @@ class ClientThread extends Thread {
         System.out.println("Load done!");
     }
 
+    //algoritm de repartizare a studentilor in functie de medie,sex si preferinta camerei
     private void distribution(){
         List <StudentEntity> males;
         List <StudentEntity> females;
@@ -133,7 +141,7 @@ class ClientThread extends Thread {
                     index++;
                 }
 
-                int turn = 2;
+                int turn;
 
                 if (indexMales.size() == 0) {
                     turn = 2;
@@ -265,6 +273,7 @@ class ClientThread extends Thread {
         System.out.println("Distribution done!");
     }
 
+    //pornirea thread-ului
     public void run () {
         try {
             boolean serverIsRunning = true;
@@ -279,20 +288,21 @@ class ClientThread extends Thread {
 
                 // Send the response to the oputput stream: server → client
                 if (request != null) {
+                    //serverul primeste de la client comanda removeAllStudents, se apeleaza metoda deleteDBStuds()
                     if (request.equals("removeAllStudents"))
                     {
                         out.println("like");
                         out.flush();
                         deleteDBStuds();
                     }
-
+                    //serverul primeste de la client comanda addStudents, se apeleaza metoda loadDB()
                     if (request.equals("addStudents"))
                     {
                         out.println("like");
                         out.flush();
                         loadDB();
                     }
-
+                    //serverul primeste de la client comanda distributeStudents, se apeleaza metoda distribution()
                     if (request.equals("distributeStudents"))
                     {
                         out.println("like");
@@ -300,9 +310,9 @@ class ClientThread extends Thread {
                         distribution();
                     }
 
-
                     String[] message = request.split(",");
-
+                    //serverul primeste de la client comanda addStudent si informatii despre student
+                    //serverul il adauga in baza de date
                     if (message[0].equals("addStudent")) {
                         StudentEntity newStudent = new StudentEntity();
                         transaction.begin();
@@ -314,11 +324,12 @@ class ClientThread extends Thread {
                         newStudent.setCameraPref(Integer.parseInt((message[6])));
                         studentRepository.save(newStudent);
                         transaction.commit();
-                        System.out.println(newStudent);
                         out.println("like");
                         out.flush();
                     }
 
+                    //serverul primeste de la client comanda removeStudent impreuna cu idul studentului
+                    //serverul sterge studentul respectiv din baza de date
                     if (message[0].equals("removeStudent")) {
                         transaction.begin();
                         studentRepository.deleteById(Integer.parseInt(message[1]));
@@ -327,6 +338,8 @@ class ClientThread extends Thread {
                         out.flush();
                     }
 
+                    //serverul primeste de la client comanda addCamin impreuna cu numele caminului
+                    //serverul adauga caminul in baza de date
                     if (message[0].equals("addCamin")) {
                         CaminEntity newCamin = new CaminEntity();
                         transaction.begin();
@@ -337,6 +350,8 @@ class ClientThread extends Thread {
                         out.flush();
                     }
 
+                    //serverul primeste de la client comanda addCamera impreuna cu idul caminului de unde face parte camera
+                    //serverul adauga camera in baza de date
                     if (message[0].equals("addCamera")) {
                         CameraEntity newCamera = new CameraEntity();
                         transaction.begin();
@@ -349,23 +364,32 @@ class ClientThread extends Thread {
                         out.flush();
                     }
 
+                    //serverul primeste de la client comanda showStudents
+                    //serverul trimite clientului toti studentii inregistrati in baza de date
                     if (request.equals("showStudents"))
                     {
                          List <StudentEntity>  students = studentRepository.findAll();
                          String mesaj = "";
                          for (StudentEntity str : students){
-                             mesaj = mesaj + str.getId() + "," + str.toString() + ";";
+                             mesaj = mesaj + str.getId() + "," + str + ";";
                          }
                          out.println(mesaj);
                          out.flush();
                     }
-
+                    
                     if (message[0].equals("showStudent"))
                     {
                         StudentEntity student = studentRepository.findById(Integer.parseInt(message[1]));
                         String mesaj = message[1] + "," + student.toString();
                         out.println( mesaj);
                         out.flush();
+                    }
+
+                    if (message[0].equals("stopServer"))
+                    {
+                        out.println("serverStopped");
+                        out.flush();
+                        serverIsRunning = false;
                     }
                 }
             }
